@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# builder_defaults.sh
+#
 
 if [ -z "${BUILDER_ROOT}" ]; then
 	echo ">>> ERROR: BUILDER_ROOT must be defined by script that includes builder_defaults.sh"
@@ -18,13 +20,6 @@ if [ ! -d "${BUILDER_TOOLS}" ]; then
 	exit 1
 fi
 
-BUILD_CONF="${BUILDER_ROOT}/build.conf"
-
-# Ensure file exists
-if [ -f ${BUILD_CONF} ]; then
-	. ${BUILD_CONF}
-fi
-
 # Make sure pkg will not be interactive
 export ASSUME_ALWAYS_YES=true
 
@@ -33,7 +28,6 @@ export ASSUME_ALWAYS_YES=true
 #  Tier 2: ARM, PowerPC, ia64, Sparc64 and sun4v
 #  Tier 3: MIPS and S/390
 #  Tier 4: None at the moment
-#  Source: http://www.freebsd.org/doc/en/articles/committers-guide/archs.html
 export TARGET=${TARGET:-"`uname -m`"}
 export TARGET_ARCH=${TARGET_ARCH:-${TARGET}}
 # Set TARGET_ARCH_CONF_DIR
@@ -50,9 +44,9 @@ fi
 # Product details
 export PRODUCT_NAME=${PRODUCT_NAME:-"AISense"}
 export PRODUCT_NAME_SUFFIX=${PRODUCT_NAME_SUFFIX:-"-CE"}
-export PRODUCT_URL=${PRODUCT_URL:-""}
+export PRODUCT_URL=${PRODUCT_URL:-"https://github.com/AISense-UTM"}
 export PRODUCT_SRC=${PRODUCT_SRC:-"${BUILDER_ROOT}/src"}
-export PRODUCT_EMAIL=${PRODUCT_EMAIL:-""}
+export PRODUCT_EMAIL=${PRODUCT_EMAIL:-"sales@infrassist.com"}
 export XML_ROOTOBJ=${XML_ROOTOBJ:-$(echo "${PRODUCT_NAME}" | tr '[[:upper:]]' '[[:lower:]]')}
 
 if [ -z "${PRODUCT_VERSION}" ]; then
@@ -77,10 +71,11 @@ fi
 # Replace . by _ to make tag names look correct
 POUDRIERE_BRANCH=$(echo "${GIT_REPO_BRANCH_OR_TAG}" | sed 's,RELENG_,v,; s,\.,_,g')
 
-GIT_REPO_BASE=$(git -C ${BUILDER_ROOT} config --get remote.origin.url | sed -e 's,/[^/]*$,,')
+#GIT_REPO_BASE=$(git -C ${BUILDER_ROOT} config --get remote.origin.url | sed -e 's,/[^/]*$,,')
+GIT_REPO_BASE=https://github.com/AISense-UTM
 
 # This is used for using svn for retrieving src
-export FREEBSD_REPO_BASE=${FREEBSD_REPO_BASE:-"${GIT_REPO_BASE}/freebsd-src.git"}
+export FREEBSD_REPO_BASE=${FREEBSD_REPO_BASE:-"${GIT_REPO_BASE}/FreeBSD-src.git"}
 export FREEBSD_BRANCH=${FREEBSD_BRANCH:-"RELENG_2_3_2"}
 export FREEBSD_PARENT_BRANCH=${FREEBSD_PARENT_BRANCH:-"releng/10.3"}
 export FREEBSD_SRC_DIR=${FREEBSD_SRC_DIR:-"${SCRATCHDIR}/FreeBSD-src"}
@@ -208,7 +203,7 @@ export ZFS_ROOT=${ZFS_ROOT:-"/poudriere"}
 export POUDRIERE_PORTS_NAME=${POUDRIERE_PORTS_NAME:-"${PRODUCT_NAME}_${POUDRIERE_BRANCH}"}
 
 export POUDRIERE_BULK=${POUDRIERE_BULK:-"${BUILDER_TOOLS}/conf/pfPorts/poudriere_bulk"}
-export POUDRIERE_PORTS_GIT_URL=${POUDRIERE_PORTS_GIT_URL:-"${GIT_REPO_BASE}/freebsd-ports.git"}
+export POUDRIERE_PORTS_GIT_URL=${POUDRIERE_PORTS_GIT_URL:-"${GIT_REPO_BASE}/FreeBSD-src.git"}
 export POUDRIERE_PORTS_GIT_BRANCH=${POUDRIERE_PORTS_GIT_BRANCH:-"RELENG_2_3_2"}
 
 unset _IS_RELEASE
