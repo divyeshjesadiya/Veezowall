@@ -71,8 +71,8 @@ fi
 # Replace . by _ to make tag names look correct
 POUDRIERE_BRANCH=$(echo "${GIT_REPO_BRANCH_OR_TAG}" | sed 's,RELENG_,v,; s,\.,_,g')
 
-#GIT_REPO_BASE=$(git -C ${BUILDER_ROOT} config --get remote.origin.url | sed -e 's,/[^/]*$,,')
-GIT_REPO_BASE=https://github.com/AISense-UTM
+GIT_REPO_BASE=$(git -C ${BUILDER_ROOT} config --get remote.origin.url | sed -e 's,/[^/]*$,,')
+#GIT_REPO_BASE=https://github.com/AISense-UTM
 
 # This is used for using svn for retrieving src
 export FREEBSD_REPO_BASE=${FREEBSD_REPO_BASE:-"${GIT_REPO_BASE}/FreeBSD-src.git"}
