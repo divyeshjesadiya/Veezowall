@@ -102,7 +102,7 @@ j="-j${njobs}"
 		"make -C ${srcdir} -s ${j} buildworld"
 
 if [ -z "${skip_kernel}" ]; then
-	for kernel in ${KERNCONF:-pfSense}; do
+	for kernel in ${KERNCONF:-AISense}; do
 		run "Building kernel (${kernel})" \
 			"make -C ${srcdir} -s ${j} KERNCONF=${kernel} buildkernel"
 	done
