@@ -2,9 +2,6 @@
 #
 # create_core_pkg.sh
 #
-# part of pfSense (https://www.pfsense.org)
-# Copyright (c) 2004-2016 Rubicon Communications, LLC (Netgate)
-# All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,8 +39,8 @@ Options:
 	-h           -- Show this help and exit
 Environment:
 	TMPDIR       -- Temporary directory (default: /tmp)
-	PRODUCT_NAME -- Product name (default: pfSense)
-	PRODUCT_URL  -- Product URL (default: https://www.pfsense.org)
+	PRODUCT_NAME -- Product name (default: AISense)
+	PRODUCT_URL  -- Product URL (default: https://github.com/AISense-UTM)
 END
 	exit 1
 }
@@ -87,8 +84,8 @@ done
 	&& err "destination path already exists and is not a directory"
 
 : ${TMPDIR=/tmp}
-: ${PRODUCT_NAME=pfSense}
-: ${PRODUCT_URL=http://www.pfsense.org/}
+: ${PRODUCT_NAME=AISense}
+: ${PRODUCT_URL=https://github.com/AISense-UTM/}
 
 [ -d $destdir ] \
 	|| mkdir -p ${destdir}
