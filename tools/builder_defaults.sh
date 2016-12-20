@@ -86,6 +86,16 @@ else
 	export BUILD_KERNELS=${BUILD_KERNELS:-"${PRODUCT_NAME}"}
 fi
 
+# XXX: Poudriere doesn't like ssh short form
+case "${FREEBSD_REPO_BASE}" in
+	git@*)
+		export FREEBSD_REPO_BASE_POUDRIERE="ssh://$(echo ${FREEBSD_REPO_BASE} | sed 's,:,/,')"
+		;;
+	*)
+		export FREEBSD_REPO_BASE_POUDRIERE="${FREEBSD_REPO_BASE}"
+		;;
+esac
+
 # Leave this alone.
 export SRC_CONF=${SRC_CONF:-"${FREEBSD_SRC_DIR}/release/conf/${PRODUCT_NAME}_src.conf"}
 export MAKE_CONF=${MAKE_CONF:-"${FREEBSD_SRC_DIR}/release/conf/${PRODUCT_NAME}_make.conf"}
