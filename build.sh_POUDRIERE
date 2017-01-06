@@ -22,9 +22,14 @@ usage() {
 	echo "		--build-kernel argument - build specified kernel. Example --build-kernel KERNEL_NAME"
 	echo "		--install-extra-kernels argument - Put extra kernel(s) under /kernel image directory. Example --install-extra-kernels KERNEL_NAME_WRAP"
 	echo "		--snapshots - Build snapshots and upload them to RSYNCIP"
+	echo "		--poudriere-snapshots - Update poudriere packages and send them to PKG_RSYNC_HOSTNAME"
 	echo "		--enable-memorydisks - This will put stage_dir and iso_dir as MFS filesystems"
 	echo "		--disable-memorydisks - Will just teardown these filesystems created by --enable-memorydisks"
+	echo "		--setup-poudriere - Install poudriere and create necessary jails and ports tree"
 	echo "		--create-unified-patch - Create a big patch with all changes done on FreeBSD"
+	echo "		--update-poudriere-jails [-a ARCH_LIST] - Update poudriere jails using current patch versions"
+	echo "		--update-poudriere-ports [-a ARCH_LIST]- Update poudriere ports tree"
+	echo "		--update-pkg-repo [-a ARCH_LIST]- Rebuild necessary ports on poudriere and update pkg repo"
 	echo "		--do-not-upload|-u - Do not upload pkgs or snapshots"
 	echo "		-V VARNAME - print value of variable VARNAME"
 	exit 1
@@ -39,6 +44,7 @@ unset pfPORTTOBUILD
 unset IMAGETYPE
 unset DO_NOT_UPLOAD
 unset SNAPSHOTS
+unset POUDRIERE_SNAPSHOTS
 unset ARCH_LIST
 BUILDACTION="images"
 
@@ -91,6 +97,9 @@ while test "$1" != ""; do
 		--snapshots)
 			export SNAPSHOTS=1
 			;;
+		--poudriere-snapshots)
+			export POUDRIERE_SNAPSHOTS=1
+			;;
 		--build-kernel)
 			BUILDACTION="buildkernel"
 			shift
@@ -117,8 +126,14 @@ while test "$1" != ""; do
 		--disable-memorydisks)
 			BUILDACTION="disablememorydisk"
 			;;
+		--setup-poudriere)
+			BUILDACTION="setup_poudriere"
+			;;
 		--create-unified-patch)
 			BUILDACTION="create_unified_patch"
+			;;
+		--update-poudriere-jails)
+			BUILDACTION="update_poudriere_jails"
 			;;
 		-a)
 			shift
@@ -128,6 +143,9 @@ while test "$1" != ""; do
 				usage
 			fi
 			export ARCH_LIST="${1}"
+			;;
+		--update-poudriere-ports)
+			BUILDACTION="update_poudriere_ports"
 			;;
 		--update-pkg-repo)
 			BUILDACTION="update_pkg_repo"
@@ -172,7 +190,9 @@ fi
 
 # Update snapshot status and exit
 if [ "${BUILDACTION}" = "snapshot_status_message" ]; then
-	export SNAPSHOTS=1
+	if [ -z "${POUDRIERE_SNAPSHOTS}" ]; then
+		export SNAPSHOTS=1
+	fi
 	snapshots_update_status "${snapshot_status_message}"
 	exit 0
 fi
@@ -210,6 +230,18 @@ case $BUILDACTION in
 	disablememorydisk)
 		prestage_on_ram_cleanup
 	;;
+	setup_poudriere)
+		poudriere_init
+	;;
+	create_unified_patch)
+		poudriere_create_patch
+	;;
+	update_poudriere_jails)
+		poudriere_update_jails
+	;;
+	update_poudriere_ports)
+		poudriere_update_ports
+	;;
 	rsync_repos)
 		unset SKIP_FINAL_RSYNC
 		pkg_repo_rsync "${CORE_PKG_PATH}"
@@ -219,6 +251,7 @@ case $BUILDACTION in
 			echo "ERROR: rsync is not installed, aborting..."
 			exit 1
 		fi
+		poudriere_bulk
 	;;
 	*)
 		usage
