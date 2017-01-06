@@ -2166,6 +2166,8 @@ poudriere_init() {
 		print_error_pfS
 	fi
 
+	# Make sure poudriere is installed
+	if ! pkg info --quiet poudriere; then
 		echo ">>> Installing poudriere..." | tee -a ${LOGFILE}
 		if ! pkg install poudriere >/dev/null 2>&1; then
 			echo ">>> ERROR: poudriere was not installed, aborting..." | tee -a ${LOGFILE}
