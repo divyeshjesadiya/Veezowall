@@ -1103,10 +1103,7 @@ clone_to_staging_area() {
 	tar -C ${PRODUCT_SRC} -c -f - . | \
 		tar -C ${STAGE_CHROOT_DIR} -x -p -f -
 
-	if [ "${PRODUCT_NAME}" != "pfSense" ]; then
-		mv ${STAGE_CHROOT_DIR}/usr/local/sbin/pfSense-upgrade \
-			${STAGE_CHROOT_DIR}/usr/local/sbin/${PRODUCT_NAME}-upgrade
-	fi
+	${STAGE_CHROOT_DIR}/usr/local/sbin/${PRODUCT_NAME}-upgrade
 
 	if [ -f ${STAGE_CHROOT_DIR}/etc/master.passwd ]; then
 		chroot ${STAGE_CHROOT_DIR} pwd_mkdb /etc/master.passwd
@@ -2067,7 +2064,7 @@ poudriere_jail_name() {
 }
 
 poudriere_rename_ports() {
-	if [ "${PRODUCT_NAME}" = "pfSense" ]; then
+	if [ "${PRODUCT_NAME}" = "AISense" ]; then
 		return;
 	fi
 
@@ -2076,7 +2073,7 @@ poudriere_rename_ports() {
 	local _ports_dir="/usr/local/poudriere/ports/${POUDRIERE_PORTS_NAME}"
 
 	echo -n ">>> Renaming product ports on ${POUDRIERE_PORTS_NAME}... " | tee -a ${LOGFILE}
-	for d in $(find ${_ports_dir} -depth 2 -type d -name '*pfSense*'); do
+	for d in $(find ${_ports_dir} -depth 2 -type d -name '*AISense*'); do
 		local _pdir=$(dirname ${d})
 		local _pname=$(echo $(basename ${d}) | sed "s,pfSense,${PRODUCT_NAME},")
 		local _plist=""
@@ -2115,7 +2112,7 @@ poudriere_rename_ports() {
 		fi
 
 		if [ -d ${_pdir}/${_pname}/files ]; then
-			for fd in $(find ${_pdir}/${_pname}/files -type d -name '*pfSense*'); do
+			for fd in $(find ${_pdir}/${_pname}/files -type d -name '*AISense*'); do
 				local _fddir=$(dirname ${fd})
 				local _fdname=$(echo $(basename ${fd}) | sed "s,pfSense,${PRODUCT_NAME},")
 
@@ -2330,7 +2327,7 @@ poudriere_bulk() {
 		cp -f "${BUILDER_TOOLS}/conf/pfPorts/make.conf" /usr/local/etc/poudriere.d/${POUDRIERE_PORTS_NAME}-make.conf
 	fi
 
-	# Change version of pfSense meta ports for snapshots
+	# Change version of AISense meta ports for snapshots
 	if [ -z "${_IS_RELEASE}" ]; then
 		local _meta_pkg_version="$(echo "${PRODUCT_VERSION}" | sed 's,DEVELOPMENT,ALPHA,')-${DATESTRING}"
 		sed -i '' \
