@@ -2154,6 +2154,16 @@ poudriere_init() {
 	LOGFILE=${BUILDER_LOGS}/poudriere.log
 
 	# Sanity checks
+	if [ -z "${ZFS_TANK}" ]; then
+		echo ">>> ERROR: \$ZFS_TANK is empty" | tee -a ${LOGFILE}
+		error=1
+	fi
+
+	if [ -z "${ZFS_ROOT}" ]; then
+		echo ">>> ERROR: \$ZFS_ROOT is empty" | tee -a ${LOGFILE}
+		error=1
+	fi
+
 	if [ -z "${POUDRIERE_PORTS_NAME}" ]; then
 		echo ">>> ERROR: \$POUDRIERE_PORTS_NAME is empty" | tee -a ${LOGFILE}
 		error=1
@@ -2161,6 +2171,24 @@ poudriere_init() {
 
 	if [ ${_error} -eq 1 ]; then
 		print_error_pfS
+	fi
+
+	# Check if zpool exists
+	if ! zpool list ${ZFS_TANK} >/dev/null 2>&1; then
+		echo ">>> ERROR: ZFS tank ${ZFS_TANK} not found, please create it and try again..." | tee -a ${LOGFILE}
+		print_error_pfS
+	fi
+
+	# Check if zfs rootfs exists
+	if ! zfs list ${ZFS_TANK}${ZFS_ROOT} >/dev/null 2>&1; then
+		echo -n ">>> Creating ZFS filesystem ${ZFS_TANK}${ZFS_ROOT}... "
+		if zfs create -o atime=off -o mountpoint=/usr/local${ZFS_ROOT} \
+		  ${ZFS_TANK}/poudriereFILE >/dev/null 2>&1; then
+			echo "Done!"
+		else
+			echo "Failed!"
+			print_error_pfS
+																					fi
 	fi
 
 	# Make sure poudriere is installed
@@ -2179,7 +2207,9 @@ poudriere_init() {
 	fi
 	echo ">>> Creating poudriere.conf" | tee -a ${LOGFILE}
 	cat <<EOF >/usr/local/etc/poudriere.conf
-NO_ZFS=yes
+#NO_ZFS=yes
+ZPOOL=${ZFS_TANK}
+ZROOTFS=${ZFS_ROOT}
 RESOLV_CONF=/etc/resolv.conf
 BASEFS=/usr/local/poudriere
 USE_PORTLINT=no
