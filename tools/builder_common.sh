@@ -2107,8 +2107,8 @@ poudriere_rename_ports() {
 				  -e "s,pfSense_module_entry,${PRODUCT_NAME}_module_entry,g" \
 				  -e "/ZEND_GET_MODULE/ s,pfSense,${PRODUCT_NAME}," \
 				  -e "/PHP_PFSENSE_WORLD_EXTNAME/ s,pfSense,${PRODUCT_NAME}," \
-				${_pdir}/${_pname}/files/pfSense.c \
-				${_pdir}/${_pname}/files/php_pfSense.h
+				${_pdir}/${_pname}/files/AISense.c \
+				${_pdir}/${_pname}/files/php_AISense.h
 		fi
 
 		if [ -d ${_pdir}/${_pname}/files ]; then
