@@ -2102,7 +2102,7 @@ poudriere_rename_ports() {
 			sed -i '' -e "s,PHP_PFSENSE,PHP_${_product_capital},g" \
 				  -e "s,PFSENSE_SHARED_LIBADD,${_product_capital}_SHARED_LIBADD,g" \
 				  -e "s,pfSense,${PRODUCT_NAME},g" \
-				  -e "s,${PRODUCT_NAME}\.c,pfSense.c,g" \
+				  -e "s,pfSense.c,${PRODUCT_NAME}\.c,g" \
 				${_pdir}/${_pname}/files/config.m4
 
 			sed -i '' -e "s,COMPILE_DL_PFSENSE,COMPILE_DL_${_product_capital}," \
@@ -2111,6 +2111,9 @@ poudriere_rename_ports() {
 				  -e "/PHP_PFSENSE_WORLD_EXTNAME/ s,pfSense,${PRODUCT_NAME}," \
 				${_pdir}/${_pname}/files/pfSense.c \
 				${_pdir}/${_pname}/files/php_pfSense.h
+
+			cp -r ${_pdir}/${_pname}/files/pfSense.c ${_pdir}/${_pname}/files/AISense.c
+			cp -r ${_pdir}/${_pname}/files/php_pfSense.h ${_pdir}/${_pname}/files/php_AISense.h
 		fi
 
 		if [ -d ${_pdir}/${_pname}/files ]; then
