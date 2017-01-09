@@ -2075,9 +2075,7 @@ poudriere_rename_ports() {
 	echo -n ">>> Renaming product ports on ${POUDRIERE_PORTS_NAME}... " | tee -a ${LOGFILE}
 	for d in $(find ${_ports_dir} -depth 2 -type d -name '*pfSense*'); do
 		local _pdir=$(dirname ${d})
-		echo "${_pdir}"
 		local _pname=$(echo $(basename ${d}) | sed "s,pfSense,${PRODUCT_NAME},")
-		echo "${_pname}"
 		local _plist=""
 
 		if [ -e ${_pdir}/${_pname} ]; then
