@@ -2064,7 +2064,7 @@ poudriere_jail_name() {
 }
 
 poudriere_rename_ports() {
-	if [ "${PRODUCT_NAME}" = "AISense" ]; then
+	if [ "${PRODUCT_NAME}" = "pfSense" ]; then
 		return;
 	fi
 
