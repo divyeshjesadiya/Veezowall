@@ -1738,7 +1738,7 @@ pkg_bootstrap() {
 }
 
 # This routine assists with installing various
-# freebsd ports files into the pfsense-fs staging
+# freebsd ports files into the aisense-fs staging
 # area.
 install_pkg_install_ports() {
 	local MAIN_PKG="${1}"
