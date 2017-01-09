@@ -2073,7 +2073,7 @@ poudriere_rename_ports() {
 	local _ports_dir="/usr/local/poudriere/ports/${POUDRIERE_PORTS_NAME}"
 
 	echo -n ">>> Renaming product ports on ${POUDRIERE_PORTS_NAME}... " | tee -a ${LOGFILE}
-	for d in $(find ${_ports_dir} -depth 2 -type d -name '*AISense*'); do
+	for d in $(find ${_ports_dir} -depth 2 -type d -name '*pfSense*'); do
 		local _pdir=$(dirname ${d})
 		local _pname=$(echo $(basename ${d}) | sed "s,pfSense,${PRODUCT_NAME},")
 		local _plist=""
@@ -2107,8 +2107,8 @@ poudriere_rename_ports() {
 				  -e "s,pfSense_module_entry,${PRODUCT_NAME}_module_entry,g" \
 				  -e "/ZEND_GET_MODULE/ s,pfSense,${PRODUCT_NAME}," \
 				  -e "/PHP_PFSENSE_WORLD_EXTNAME/ s,pfSense,${PRODUCT_NAME}," \
-				${_pdir}/${_pname}/files/AISense.c \
-				${_pdir}/${_pname}/files/php_AISense.h
+				${_pdir}/${_pname}/files/pfSense.c \
+				${_pdir}/${_pname}/files/php_pfSense.h
 		fi
 
 		if [ -d ${_pdir}/${_pname}/files ]; then
