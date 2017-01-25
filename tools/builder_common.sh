@@ -2210,7 +2210,6 @@ poudriere_init() {
 	fi
 	echo ">>> Creating poudriere.conf" | tee -a ${LOGFILE}
 	cat <<EOF >/usr/local/etc/poudriere.conf
-#NO_ZFS=yes
 ZPOOL=${ZFS_TANK}
 ZROOTFS=${ZFS_ROOT}
 RESOLV_CONF=/etc/resolv.conf
@@ -2218,6 +2217,7 @@ BASEFS=/usr/local/poudriere
 USE_PORTLINT=no
 USE_TMPFS=yes
 NOLINUX=yes
+BUILD_AS_NON_ROOT=no
 DISTFILES_CACHE=/usr/ports/distfiles
 CHECK_CHANGED_OPTIONS=yes
 CHECK_CHANGED_DEPS=yes
