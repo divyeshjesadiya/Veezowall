@@ -1099,11 +1099,15 @@ clone_to_staging_area() {
 	# Clone everything to the final staging area
 	echo -n ">>> Cloning everything to ${STAGE_CHROOT_DIR} staging area..."
 	LOGFILE=${BUILDER_LOGS}/cloning.${TARGET}.log
+	
 
 	tar -C ${PRODUCT_SRC} -c -f - . | \
 		tar -C ${STAGE_CHROOT_DIR} -x -p -f -
 
-	${STAGE_CHROOT_DIR}/usr/local/sbin/${PRODUCT_NAME}-upgrade
+	if [ "${PRODUCT_NAME}" != "pfSense" ]; then
+		mv ${STAGE_CHROOT_DIR}/usr/local/sbin/pfSense-upgrade \
+			${STAGE_CHROOT_DIR}/usr/local/sbin/${PRODUCT_NAME}-upgrade
+	fi
 
 	if [ -f ${STAGE_CHROOT_DIR}/etc/master.passwd ]; then
 		chroot ${STAGE_CHROOT_DIR} pwd_mkdb /etc/master.passwd
