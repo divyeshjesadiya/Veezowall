@@ -1,2 +1,17 @@
-function: "sha256"
-fingerprint: "6a3b867c269ece107b6e5a69edd7245f0cf4fed374578c3959b173895283ba95"
+FreeBSD: { enabled: no }
+
+AISense-core: {
+  url: "pkg+http://192.168.1.228/www/packages",
+  mirror_type: "srv",
+  signature_type: "pubkey",
+  pubkey: "/usr/share/keys/pkg/trusted/repo.pub",
+  enabled: yes
+}
+
+AISense: {
+  url: "pkg+http://192.168.1.228",
+  mirror_type: "srv",
+  signature_type: "pubkey",
+  pubkey: "/usr/share/keys/pkg/trusted/repo.pub",
+  enabled: yes
+}
