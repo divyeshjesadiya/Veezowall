@@ -1406,8 +1406,8 @@ install_bsdinstaller() {
 	sed -i '' -e "s,%%PRODUCT_NAME%%,${PRODUCT_NAME}," \
 		  -e "s,%%PRODUCT_VERSION%%,${PRODUCT_VERSION}," \
 		  -e "s,%%ARCH%%,${TARGET}," \
-		  ${FINAL_CHROOT_DIR}/usr/local/share/dfuibe_lua/conf/AISense.lua \
-		  ${FINAL_CHROOT_DIR}/usr/local/share/dfuibe_lua/conf/AISense_rescue.lua
+		  ${FINAL_CHROOT_DIR}/usr/local/share/dfuibe_lua/conf/pfSense.lua \
+		  ${FINAL_CHROOT_DIR}/usr/local/share/dfuibe_lua/conf/pfSense_rescue.lua
 	echo ">>> Installing BSDInstaller in chroot (${FINAL_CHROOT_DIR})... (finished)"
 }
 
@@ -1652,10 +1652,6 @@ poudriere_possible_archs() {
 		if [ -f /usr/local/bin/qemu-arm-static ]; then
 			# Make sure binmiscctl is ok
 			/usr/local/etc/rc.d/qemu_user_static forcestart >/dev/null 2>&1
-
-			if binmiscctl lookup armv6 >/dev/null 2>&1; then
-				_archs="${_archs} arm.armv6"
-			fi
 		fi
 	fi
 
@@ -1891,12 +1887,7 @@ EOF
 	for jail_arch in ${_archs}; do
 		jail_name=$(poudriere_jail_name ${jail_arch})
 
-		if [ "${jail_arch}" = "arm.armv6" ]; then
-			native_xtools="-x"
-		else
-			native_xtools=""
-		fi
-
+		
 		echo -n ">>> Creating jail ${jail_name}, it may take some time... " | tee -a ${LOGFILE}
 		# XXX: Change -m to git when it's available in poudriere
 		if ! script -aq ${LOGFILE} poudriere jail -c -j "${jail_name}" -v ${FREEBSD_PARENT_BRANCH} \
