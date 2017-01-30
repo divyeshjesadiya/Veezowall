@@ -5,11 +5,10 @@
 #
 set +e
 usage() {
-	echo "Usage $0 [options] [ iso | nanobsd | ova | nanobsd-vga | memstick | memstickserial | memstickadi | fullupdate | all | none ]"
-	echo "		all = iso nanobsd nanobsd-vga memstick memstickserial memstickadi fullupdate"
+	echo "Usage $0 [options] [ iso | ova | memstick | memstickserial | memstickadi | fullupdate | all | none ]"
+	echo "		all = iso memstick memstickserial memstickadi fullupdate"
 	echo "		none = upgrade only pkg repo"
 	echo "	[ options ]: "
-	echo "		--flash-size|-f size(s) - a list of flash sizes to build with nanobsd i.e. '2g 4g'. Default: 2g"
 	echo "		--no-buildworld|-c - Will set NO_BUILDWORLD NO_BUILDKERNEL to not build kernel and world"
 	echo "		--no-cleanobjdir|--no-cleanrepos|-d - Will not clean FreeBSD object built dir to allow restarting a build with NO_CLEAN"
 	echo "		--resume-image-build|-r - Includes -c -d and also will just move directly to image creation using pre-staged data"
@@ -58,15 +57,6 @@ while test "$1" != ""; do
 		--no-cleanobjdir|--no-cleanrepos|-d)
 			export NO_CLEAN_FREEBSD_OBJ=YES
 			export NO_CLEAN_FREEBSD_SRC=YES
-			;;
-		--flash-size|-f)
-			shift
-			if [ $# -eq 0 ]; then
-				echo "--flash-size needs extra parameter."
-				echo
-				usage
-			fi
-			export FLASH_SIZE="${1}"
 			;;
 		--resume-image-build|-r)
 			export NO_BUILDWORLD=YES
@@ -153,7 +143,7 @@ while test "$1" != ""; do
 		--do-not-upload|-u)
 			export DO_NOT_UPLOAD=1
 			;;
-		all|none|*iso*|*ova*|*memstick*|*memstickserial*|*memstickadi*|*nanobsd*|*nanobsd-vga*|*fullupdate*)
+		all|none|*iso*|*ova*|*memstick*|*memstickserial*|*memstickadi*|*fullupdate*)
 			BUILDACTION="images"
 			IMAGETYPE="${1}"
 			;;
@@ -311,7 +301,7 @@ fi
 if [ "$IMAGETYPE" = "none" ]; then
 	_IMAGESTOBUILD=""
 elif [ "$IMAGETYPE" = "all" ]; then
-	_IMAGESTOBUILD="iso fullupdate nanobsd nanobsd-vga memstick memstickserial"
+	_IMAGESTOBUILD="iso fullupdate memstick memstickserial"
 	if [ "${TARGET}" = "amd64" ]; then
 		_IMAGESTOBUILD="${_IMAGESTOBUILD} memstickadi"
 		if [ -n "${_IS_RELEASE}"  ]; then
@@ -414,17 +404,6 @@ for _IMGTOBUILD in $_IMAGESTOBUILD; do
 				create_Full_update_tarball
 			fi
 			;;
-		nanobsd|nanobsd-vga)
-			if [ "${TARGET}" = "i386" -a "${_IMGTOBUILD}" = "nanobsd" ]; then
-				export DEFAULT_KERNEL=${DEFAULT_KERNEL_NANOBSD:-"${PRODUCT_NAME}_wrap"}
-			elif [ "${TARGET}" = "i386" -a "${_IMGTOBUILD}" = "nanobsd-vga" ]; then
-				export DEFAULT_KERNEL=${DEFAULT_KERNEL_NANOBSDVGA:-"${PRODUCT_NAME}_wrap_vga"}
-			elif [ "${TARGET}" = "amd64" ]; then
-				export DEFAULT_KERNEL=${DEFAULT_KERNEL_NANOBSD:-"${PRODUCT_NAME}"}
-			fi
-			# Create the NanoBSD disk image
-			create_nanobsd_diskimage ${_IMGTOBUILD} "${FLASH_SIZE}"
-			;;
 		ova)
 			old_custom_package_list="${custom_package_list}"
 			export custom_package_list="${custom_package_list} ${PRODUCT_NAME}-pkg-Open-VM-Tools"
@@ -464,8 +443,7 @@ if [ -n "${SNAPSHOTS}" ]; then
 	if [ "${IMAGETYPE}" = "none" -a -z "${DO_NOT_UPLOAD}" ]; then
 		pkg_repo_rsync "${CORE_PKG_PATH}"
 	elif [ "${IMAGETYPE}" != "none" ]; then
-		snapshots_copy_to_staging_iso_updates
-		snapshots_copy_to_staging_nanobsd "${FLASH_SIZE}"
+		snapshots_copy_to_staging_iso_update
 		# SCP files to snapshot web hosting area
 		if [ -z "${DO_NOT_UPLOAD}" ]; then
 			snapshots_scp_files
