@@ -84,7 +84,7 @@ fi
 
 # Read product_name from $g, defaults to pfSense
 # Use php -n here because we are not ready to load extensions yet
-product=$(/usr/local/bin/php -n /usr/local/sbin/read_global_var product_name pfSense)
+product=$(/usr/local/bin/php -n /usr/local/sbin/read_global_var product_name AISense)
 
 # Setup dumpdev/ddb/savecore"
 echo "Configuring crash dumps..."
