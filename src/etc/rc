@@ -85,6 +85,11 @@ fi
 # Read product_name from $g, defaults to pfSense
 # Use php -n here because we are not ready to load extensions yet
 product=$(/usr/local/bin/php -n /usr/local/sbin/read_global_var product_name AISense)
+echo "${product}"
+if [ "${product}" = "pfSense" ]; then
+	"${product}" = "AISense"
+fi
+
 
 # Setup dumpdev/ddb/savecore"
 echo "Configuring crash dumps..."
@@ -416,8 +421,7 @@ echo "done."
 /usr/bin/cap_mkdb /etc/login.conf
 
 # Second upgrade stage
-#/usr/local/sbin/${product}-upgrade -y -b 2
-/usr/local/sbin/AISense-upgrade -y -b 2
+/usr/local/sbin/${product}-upgrade -y -b 2
 
 # Run the php.ini setup file and populate
 # /usr/local/etc/php.ini
