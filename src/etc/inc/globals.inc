@@ -149,11 +149,11 @@ if (file_exists("/etc/platform")) {
 
 	$g['platform'] = trim(file_get_contents("/etc/platform"));
 	if ($g['platform'] == "nanobsd") {
-		$g['firmware_update_text']="pfSense-*.img.gz";
+		$g['firmware_update_text']="AISense-*.img.gz";
 		$g['hidebackupbeforeupgrade'] = true;
 		$g['default_config_backup_count'] = 5;
 	} else {
-		$g['firmware_update_text']="pfSense-*.tgz";
+		$g['firmware_update_text']="AISense-*.tgz";
 		$g['default_config_backup_count'] = 30;
 	}
 } else { 
