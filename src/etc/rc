@@ -244,7 +244,7 @@ else
 fi
 
 echo
-cat /etc/ascii-art/pfsense-logo-small.txt
+cat /etc/ascii-art/aisense-logo-small.txt
 echo
 echo
 echo "Welcome to ${product} ${version}${version_patch}${platformbanner}..."
