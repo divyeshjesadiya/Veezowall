@@ -356,7 +356,7 @@ function send_smtp_message($message, $subject = "(no subject)", $force = false) 
 
 	$smtp = new smtp_class;
 
-	$from = "pfsense@{$config['system']['hostname']}.{$config['system']['domain']}";
+	$from = "aisense@{$config['system']['hostname']}.{$config['system']['domain']}";
 	$to = $config['notifications']['smtp']['notifyemailaddress'];
 
 	$smtp->host_name = $config['notifications']['smtp']['ipaddress'];

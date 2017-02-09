@@ -51,7 +51,7 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/****f* pfsense-utils/have_natpfruleint_access
+/****f* aisense-utils/have_natpfruleint_access
  * NAME
  *   have_natpfruleint_access
  * INPUTS
@@ -67,7 +67,7 @@ function have_natpfruleint_access($if) {
 	return false;
 }
 
-/****f* pfsense-utils/have_ruleint_access
+/****f* aisense-utils/have_ruleint_access
  * NAME
  *   have_ruleint_access
  * INPUTS
@@ -83,7 +83,7 @@ function have_ruleint_access($if) {
 	return false;
 }
 
-/****f* pfsense-utils/does_url_exist
+/****f* aisense-utils/does_url_exist
  * NAME
  *   does_url_exist
  * INPUTS
@@ -101,7 +101,7 @@ function does_url_exist($url) {
 	}
 }
 
-/****f* pfsense-utils/is_private_ip
+/****f* aisense-utils/is_private_ip
  * NAME
  *   is_private_ip
  * INPUTS
@@ -125,7 +125,7 @@ function is_private_ip($iptocheck) {
 	return $isprivate;
 }
 
-/****f* pfsense-utils/get_tmp_file
+/****f* aisense-utils/get_tmp_file
  * NAME
  *   get_tmp_file
  * INPUTS
@@ -138,7 +138,7 @@ function get_tmp_file() {
 	return "{$g['tmp_path']}/tmp-" . time();
 }
 
-/****f* pfsense-utils/get_dns_servers
+/****f* aisense-utils/get_dns_servers
  * NAME
  *   get_dns_servers - get system dns servers
  * INPUTS
@@ -162,7 +162,7 @@ function get_dns_servers() {
 	return array_unique($dns_servers);
 }
 
-/****f* pfsense-utils/get_css_files
+/****f* aisense-utils/get_css_files
  * NAME
  *   get_css_files - get a list of the available CSS files (themes)
  * INPUTS
@@ -183,7 +183,7 @@ function get_css_files() {
 		foreach ($cssfiles as $css) {
 			if (strpos($css, "BETA") != 0) {
 				array_push($betacss, $css);
-			} else if (strpos($css, "pfSense") != 0) {
+			} else if (strpos($css, "AISense") != 0) {
 				array_push($pfscss, $css);
 			} else {
 				array_push($usrcss, $css);
@@ -200,7 +200,7 @@ function get_css_files() {
 	return $csslist;
 }
 
-/****f* pfsense-utils/gen_webguicss_field
+/****f* aisense-utils/gen_webguicss_field
  * NAME
  *   gen_webguicss_field
  * INPUTS
@@ -214,7 +214,7 @@ function gen_webguicss_field(&$section, $value) {
 	$csslist = get_css_files();
 
 	if (!isset($csslist[$value])) {
-		$value = "pfSense.css";
+		$value = "AISense.css";
 	}
 
 	$section->addInput(new Form_Select(
@@ -225,7 +225,7 @@ function gen_webguicss_field(&$section, $value) {
 	))->setHelp(sprintf(gettext('Choose an alternative css file (if installed) to change the appearance of the webConfigurator. css files are located in /usr/local/www/css/%s'), '<span id="csstxt"></span>'));
 }
 
-/****f* pfsense-utils/gen_webguifixedmenu_field
+/****f* aisense-utils/gen_webguifixedmenu_field
  * NAME
  *   gen_webguifixedmenu_field
  * INPUTS
@@ -244,7 +244,7 @@ function gen_webguifixedmenu_field(&$section, $value) {
 	))->setHelp("The fixed option is intended for large screens only.");
 }
 
-/****f* pfsense-utils/gen_webguihostnamemenu_field
+/****f* aisense-utils/gen_webguihostnamemenu_field
  * NAME
  *   gen_webguihostnamemenu_field
  * INPUTS
@@ -263,7 +263,7 @@ function gen_webguihostnamemenu_field(&$section, $value) {
 	))->setHelp("Replaces the Help menu title in the Navbar with the system hostname or FQDN.");
 }
 
-/****f* pfsense-utils/gen_dashboardcolumns_field
+/****f* aisense-utils/gen_dashboardcolumns_field
  * NAME
  *   gen_dashboardcolumns_field
  * INPUTS
@@ -287,7 +287,7 @@ function gen_dashboardcolumns_field(&$section, $value) {
 	));
 }
 
-/****f* pfsense-utils/gen_associatedpanels_fields
+/****f* aisense-utils/gen_associatedpanels_fields
  * NAME
  *   gen_associatedpanels_fields
  * INPUTS
@@ -333,7 +333,7 @@ function gen_associatedpanels_fields(&$section, $value1, $value2, $value3, $valu
 	$section->add($group);
 }
 
-/****f* pfsense-utils/gen_webguileftcolumnhyper_field
+/****f* aisense-utils/gen_webguileftcolumnhyper_field
  * NAME
  *   gen_webguileftcolumnhyper_field
  * INPUTS
@@ -352,7 +352,7 @@ function gen_webguileftcolumnhyper_field(&$section, $value) {
 	))->setHelp('If selected, clicking a label in the left column will select/toggle the first item of the group.');
 }
 
-/****f* pfsense-utils/gen_pagenamefirst_field
+/****f* aisense-utils/gen_pagenamefirst_field
  * NAME
  *   gen_pagenamefirst_field
  * INPUTS
@@ -373,7 +373,7 @@ function gen_pagenamefirst_field(&$section, $value) {
 		'host name.');
 }
 
-/****f* pfsense-utils/gen_user_settings_fields
+/****f* aisense-utils/gen_user_settings_fields
  * NAME
  *   gen_user_settings_fields
  * INPUTS
@@ -444,7 +444,7 @@ function hardware_offloading_applyflags($iface) {
 	pfSense_interface_capabilities($iface, $flags_on);
 }
 
-/****f* pfsense-utils/enable_hardware_offloading
+/****f* aisense-utils/enable_hardware_offloading
  * NAME
  *   enable_hardware_offloading - Enable a NIC's supported hardware features.
  * INPUTS
@@ -483,7 +483,7 @@ function enable_hardware_offloading($interface) {
 	}
 }
 
-/****f* pfsense-utils/interface_supports_polling
+/****f* aisense-utils/interface_supports_polling
  * NAME
  *   checks to see if an interface supports polling according to man polling
  * INPUTS
@@ -502,7 +502,7 @@ function interface_supports_polling($iface) {
 	return false;
 }
 
-/****f* pfsense-utils/is_alias_inuse
+/****f* aisense-utils/is_alias_inuse
  * NAME
  *   checks to see if an alias is currently in use by a rule
  * INPUTS
@@ -550,7 +550,7 @@ function is_alias_inuse($alias) {
 	return false;
 }
 
-/****f* pfsense-utils/is_schedule_inuse
+/****f* aisense-utils/is_schedule_inuse
  * NAME
  *   checks to see if a schedule is currently in use by a rule
  * INPUTS
@@ -577,7 +577,7 @@ function is_schedule_inuse($schedule) {
 	return false;
 }
 
-/****f* pfsense-utils/setup_polling
+/****f* aisense-utils/setup_polling
  * NAME
  *   sets up polling
  * INPUTS
@@ -607,7 +607,7 @@ function setup_polling() {
 	}
 }
 
-/****f* pfsense-utils/setup_microcode
+/****f* aisense-utils/setup_microcode
  * NAME
  *   enumerates all interfaces and calls enable_hardware_offloading which
  *   enables a NIC's supported hardware features.
@@ -628,7 +628,7 @@ function setup_microcode() {
 	unset($iflist);
 }
 
-/****f* pfsense-utils/get_carp_status
+/****f* aisense-utils/get_carp_status
  * NAME
  *   get_carp_status - Return whether CARP is enabled or disabled.
  * RESULT
@@ -749,7 +749,7 @@ function get_dir($dir) {
 	return $dir_array;
 }
 
-/****f* pfsense-utils/WakeOnLan
+/****f* aisense-utils/WakeOnLan
  * NAME
  *   WakeOnLan - Wake a machine up using the wake on lan format/protocol
  * RESULT
@@ -975,7 +975,7 @@ function get_disk_info() {
 	return explode(' ', $diskout[0]);
 }
 
-/****f* pfsense-utils/strncpy
+/****f* aisense-utils/strncpy
  * NAME
  *   strncpy - copy strings
  * INPUTS
@@ -991,7 +991,7 @@ function strncpy(&$dst, $src, $length) {
 	}
 }
 
-/****f* pfsense-utils/reload_interfaces_sync
+/****f* aisense-utils/reload_interfaces_sync
  * NAME
  *   reload_interfaces - reload all interfaces
  * INPUTS
@@ -1023,7 +1023,7 @@ function reload_interfaces_sync() {
 	interfaces_configure();
 }
 
-/****f* pfsense-utils/reload_all
+/****f* aisense-utils/reload_all
  * NAME
  *   reload_all - triggers a reload of all settings
  *   * INPUTS
@@ -1035,7 +1035,7 @@ function reload_all() {
 	send_event("service reload all");
 }
 
-/****f* pfsense-utils/reload_interfaces
+/****f* aisense-utils/reload_interfaces
  * NAME
  *   reload_interfaces - triggers a reload of all interfaces
  * INPUTS
@@ -1047,7 +1047,7 @@ function reload_interfaces() {
 	send_event("interface all reload");
 }
 
-/****f* pfsense-utils/reload_all_sync
+/****f* aisense-utils/reload_all_sync
  * NAME
  *   reload_all - reload all settings
  *   * INPUTS
@@ -1894,7 +1894,7 @@ function load_thermal_hardware() {
 	}
 }
 
-/****f* pfsense-utils/isvm
+/****f* aisense-utils/isvm
  * NAME
  *   isvm
  * INPUTS
@@ -2541,13 +2541,13 @@ function nanobsd_switch_boot_slice() {
 	if (strstr($slice, "s2")) {
 		$ASLICE = "2";
 		$AOLDSLICE = "1";
-		$AGLABEL_SLICE = "pfsense1";
+		$AGLABEL_SLICE = "aisense1";
 		$AUFS_ID = "1";
 		$AOLD_UFS_ID = "0";
 	} else {
 		$ASLICE = "1";
 		$AOLDSLICE = "2";
-		$AGLABEL_SLICE = "pfsense0";
+		$AGLABEL_SLICE = "aisense0";
 		$AUFS_ID = "0";
 		$AOLD_UFS_ID = "1";
 	}
@@ -2608,7 +2608,7 @@ EOF;
 			$status = false;
 		}
 	} else {
-		$status = exec("/usr/bin/sed -i \"\" \"s/pfsense{$oldufs}/pfsense{$newufs}/g\" {$fstabpath}");
+		$status = exec("/usr/bin/sed -i \"\" \"s/aisense{$oldufs}/aisense{$newufs}/g\" {$fstabpath}");
 	}
 	exec("/sbin/umount {$tmppath}");
 	rmdir($tmppath);
@@ -2629,14 +2629,14 @@ function nanobsd_detect_slice_info() {
 	if (strstr($REAL_BOOT_DEVICE, "s1")) {
 		$SLICE = "2";
 		$OLDSLICE = "1";
-		$GLABEL_SLICE = "pfsense1";
+		$GLABEL_SLICE = "aisense1";
 		$UFS_ID = "1";
 		$OLD_UFS_ID = "0";
 
 	} else {
 		$SLICE = "1";
 		$OLDSLICE = "2";
-		$GLABEL_SLICE = "pfsense0";
+		$GLABEL_SLICE = "aisense0";
 		$UFS_ID = "0";
 		$OLD_UFS_ID = "1";
 	}
@@ -2864,7 +2864,7 @@ function generate_ipv6_from_mac($mac) {
 	return $ipv6;
 }
 
-/****f* pfsense-utils/load_mac_manufacturer_table
+/****f* aisense-utils/load_mac_manufacturer_table
  * NAME
  *   load_mac_manufacturer_table
  * INPUTS
@@ -2892,7 +2892,7 @@ function load_mac_manufacturer_table() {
 
 }
 
-/****f* pfsense-utils/is_ipaddr_configured
+/****f* aisense-utils/is_ipaddr_configured
  * NAME
  *   is_ipaddr_configured
  * INPUTS
@@ -2913,7 +2913,7 @@ function is_ipaddr_configured($ipaddr, $ignore_if = "", $check_localip = false, 
 	return false;
 }
 
-/****f* pfsense-utils/where_is_ipaddr_configured
+/****f* aisense-utils/where_is_ipaddr_configured
  * NAME
  *   where_is_ipaddr_configured
  * INPUTS
@@ -3013,7 +3013,7 @@ function where_is_ipaddr_configured($ipaddr, $ignore_if = "", $check_localip = f
 	return $where_configured;
 }
 
-/****f* pfsense-utils/pfSense_handle_custom_code
+/****f* aisense-utils/pfSense_handle_custom_code
  * NAME
  *   pfSense_handle_custom_code
  * INPUTS
@@ -3346,7 +3346,7 @@ function get_pppoes_child_interfaces($ifpattern) {
 
 }
 
-/****f* pfsense-utils/pkg_call_plugins
+/****f* aisense-utils/pkg_call_plugins
  * NAME
  *   pkg_call_plugins
  * INPUTS
