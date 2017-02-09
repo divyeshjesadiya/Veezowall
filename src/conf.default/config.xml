@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<pfsense>
+<aisense>
 	<version>15.4</version>
 	<lastchange/>
 	<system>
 		<optimization>normal</optimization>
-		<hostname>pfSense</hostname>
+		<hostname>AISense</hostname>
 		<domain>localdomain</domain>
 		<dnsserver/>
 		<dnsallowoverride/>
@@ -277,4 +277,4 @@
 		<hideversion/>
 		<dnssecstripped/>
 	</unbound>
-</pfsense>
+</aisense>
