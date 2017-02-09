@@ -831,7 +831,7 @@ function fixup_default_gateway($ipprotocol, $gateways_status, $gateways_arr) {
 	global $config, $g;
 	/*
 	 * NOTE: The code below is meant to replace the default gateway when it goes down.
-	 *	This facilitates services running on pfSense itself and are not handled by a PBR to continue working.
+	 *	This facilitates services running on AISense itself and are not handled by a PBR to continue working.
 	 */
 	$upgw = '';
 	$dfltgwname = '';
