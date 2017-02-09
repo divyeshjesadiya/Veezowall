@@ -2036,7 +2036,7 @@ function system_set_harddisk_standby() {
 			$harddisks = get_smart_drive_list();
 
 			// Since get_smart_drive_list() only matches ad|da|ada; lets put the check below
-			// just in case of some weird pfSense platform installs.
+			// just in case of some weird AISense platform installs.
 			if (count($harddisks) > 0) {
 				// Iterate disks and run the camcontrol command for each
 				foreach ($harddisks as $harddisk) {
