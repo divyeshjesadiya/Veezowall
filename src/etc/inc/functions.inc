@@ -63,9 +63,9 @@ if (!function_exists("gettext")) {
 }
 
 if (!function_exists("pfSenseHeader")) {
-	/****f* pfsense-utils/pfSenseHeader
+	/****f* aisense-utils/pfSenseHeader
 	 * NAME
-	 *   pfSenseHeader
+	 *   AISenseHeader
 	 * INPUTS
 	 *   none
 	 * RESULT
@@ -93,6 +93,39 @@ if (!function_exists("pfSenseHeader")) {
 			header("Location: $text");
 		}
 	}
+}
+
+if (!function_exists("AISenseHeader")) {
+        /****f* aisense-utils/AISenseHeader
+         * NAME
+         *   AISenseHeader
+         * INPUTS
+         *   none
+         * RESULT
+         *   Javascript header change or browser Location:
+         ******/
+        function AISenseHeader($text) {
+                global $_SERVER;
+                if (isAjax()) {
+                        if ($_SERVER['HTTPS'] == "on") {
+                                $protocol = "https";
+                        } else {
+                                $protocol = "http";
+                        }
+
+                        $port = ":{$_SERVER['SERVER_PORT']}";
+                        if ($_SERVER['SERVER_PORT'] == "80" && $protocol == "http") {
+                                $port = "";
+                        }
+                        if ($_SERVER['SERVER_PORT'] == "443" && $protocol == "https") {
+                                $port = "";
+                        }
+                        $complete_url = "{$protocol}://{$_SERVER['HTTP_HOST']}{$port}/{$text}";
+                        echo "\ndocument.location.href = '{$complete_url}';\n";
+                } else {
+                        header("Location: $text");
+                }
+        }
 }
 /* END compatibility goo with HEAD */
 

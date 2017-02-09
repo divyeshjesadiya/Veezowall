@@ -550,7 +550,7 @@ add 65292 allow carp from any to any
 
 # layer 2: pass ARP
 add 65301 pass layer2 mac-type arp,rarp
-# pfsense requires for WPA
+# aisense requires for WPA
 add 65302 pass layer2 mac-type 0x888e,0x88c7
 # PPP Over Ethernet Session Stage/Discovery Stage
 add 65303 pass layer2 mac-type 0x8863,0x8864
