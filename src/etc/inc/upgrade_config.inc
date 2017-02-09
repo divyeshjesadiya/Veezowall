@@ -2437,7 +2437,7 @@ function upgrade_061_to_062() {
 }
 
 function upgrade_062_to_063() {
-	/* Upgrade legacy Themes to the new pfsense_ng */
+	/* Upgrade legacy Themes to the new aisense_ng */
 	// Not supported in 2.3+
 
 }

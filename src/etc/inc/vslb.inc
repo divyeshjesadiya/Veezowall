@@ -216,7 +216,7 @@ function relayd_configure($kill_first=false) {
 
 	/* Global timeout, interval and prefork settings
 	   if not specified by the user:
-	   - use a 1000 ms timeout value as in pfsense 2.0.1 and above
+	   - use a 1000 ms timeout value as in aisense 2.0.1 and above
 	   - leave interval and prefork empty, relayd will use its default values */
 
 	if (isset($setting['timeout']) && !empty($setting['timeout'])) {
