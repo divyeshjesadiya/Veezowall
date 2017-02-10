@@ -244,8 +244,8 @@ esac
 export PKG_RSYNC_HOSTNAME=${PKG_RSYNC_HOSTNAME:-${STAGING_HOSTNAME}}
 export PKG_RSYNC_USERNAME=${PKG_RSYNC_USERNAME:-"root"}
 export PKG_RSYNC_SSH_PORT=${PKG_RSYNC_SSH_PORT:-"2224"}
-export PKG_RSYNC_DESTDIR=${PKG_RSYNC_DESTDIR:-"/usr/local/poudriere/data/packages/AISense_v2_3_2_amd64-AISense_v2_3_2/www/packages"}
-export PKG_RSYNC_LOGS=${PKG_RSYNC_LOGS:-"/usr/local/poudriere/data/packages/AISense_v2_3_2_amd64-AISense_v2_3_2/www/packages/logs/${POUDRIERE_BRANCH}/${TARGET}"}
+export PKG_RSYNC_DESTDIR=${PKG_RSYNC_DESTDIR:-"/usr/local/poudriere/data/packages/AISense_v2_3_2_amd64-AISense_v2_3_2"}
+export PKG_RSYNC_LOGS=${PKG_RSYNC_LOGS:-"/usr/local/poudriere/data/packages/AISense_v2_3_2_amd64-AISense_v2_3_2/logs/${POUDRIERE_BRANCH}/${TARGET}"}
 
 # Final packages server
 if [ -n "${_IS_RELEASE}" ]; then
@@ -281,7 +281,7 @@ else
 	export PKG_REPO_SIGN_KEY=${PKG_REPO_SIGN_KEY:-"beta${PRODUCT_NAME_SUFFIX}"}
 fi
 # Command used to sign pkg repo
-#export PKG_REPO_SIGNING_COMMAND=${PKG_REPO_SIGNING_COMMAND:-"ssh sign@codesigner.netgate.com sudo ./sign.sh ${PKG_REPO_SIGN_KEY}"}
+#export PKG_REPO_SIGNING_COMMAND=${PKG_REPO_SIGNING_COMMAND:-"ssh sign@infrassist.com sudo ./sign.sh ${PKG_REPO_SIGN_KEY}"}
 
 # Define base package version, based on date for snaps
 export CORE_PKG_VERSION="${PRODUCT_VERSION%%-*}${CORE_PKG_DATESTRING}${PRODUCT_REVISION:+_}${PRODUCT_REVISION}"
