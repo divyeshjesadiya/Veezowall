@@ -1584,6 +1584,7 @@ pkg_repo_rsync() {
 					--include=\"/*\" --include=\"*/.real*\" --include=\"*/.real*/***\" \
 					--exclude=\"*\" \
 					${PKG_FINAL_RSYNC_USERNAME}@${_pkg_final_rsync_hostname}:${PKG_FINAL_RSYNC_DESTDIR}"
+				echo ${_cmd}
 
 				echo -n ">>> Sending updated packages to ${_pkg_final_rsync_hostname}... " | tee -a ${_logfile}
 				if script -aq ${_logfile} ssh -v -p ${PKG_RSYNC_SSH_PORT} -o StrictHostKeyChecking=no \
