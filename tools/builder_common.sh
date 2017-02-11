@@ -1535,12 +1535,12 @@ pkg_repo_rsync() {
 			print_error_pfS
 		fi
 
-		local _pkgfile="${_repo_path}/Latest/pkg.txz"
+		local _pkgfile="${_repo_path}/Latest"
 		if [ -e ${_pkgfile} ]; then
 			echo -n ">>> Signing Latest/pkg.txz for bootstraping... " | tee -a ${_logfile}
 
-			if script -aq ${_logfile} pkg repo ${_pkgfile} \
-				${PKG_REPO_SIGNING_COMMAND} >/dev/null 2>&1; then
+			if script -aq ${_logfile} pkg repo ${_pkgfile}/ \
+				${PKG_REPO_SIGNING_COMMAND}; then
 				echo "Done!" | tee -a ${_logfile}
 			else
 				echo "Failed!" | tee -a ${_logfile}
