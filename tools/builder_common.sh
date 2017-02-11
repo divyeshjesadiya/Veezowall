@@ -1539,7 +1539,7 @@ pkg_repo_rsync() {
 		if [ -e ${_pkgfile} ]; then
 			echo -n ">>> Signing Latest/pkg.txz for bootstraping... " | tee -a ${_logfile}
 
-			if script -aq ${_logfile} pkg repo ${_pkgfile}/ \
+			if script -aq ${_logfile} pkg repo ${_pkgfile} \
 				${PKG_REPO_SIGNING_COMMAND} >/dev/null 2>&1; then
 				echo "Done!" | tee -a ${_logfile}
 			else
