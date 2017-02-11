@@ -281,7 +281,7 @@ else
 	export PKG_REPO_SIGN_KEY=${PKG_REPO_SIGN_KEY:-"beta${PRODUCT_NAME_SUFFIX}"}
 fi
 # Command used to sign pkg repo
-export PKG_REPO_SIGNING_COMMAND=${PKG_REPO_SIGNING_COMMAND:-"/usr/local/etc/ssl/repo.pub"}
+export PKG_REPO_SIGNING_COMMAND=${PKG_REPO_SIGNING_COMMAND:-"/usr/local/etc/ssl/repo.key"}
 
 # Define base package version, based on date for snaps
 export CORE_PKG_VERSION="${PRODUCT_VERSION%%-*}${CORE_PKG_DATESTRING}${PRODUCT_REVISION:+_}${PRODUCT_REVISION}"
