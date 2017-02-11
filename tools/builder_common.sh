@@ -1527,7 +1527,7 @@ pkg_repo_rsync() {
 		# https://github.com/freebsd/pkg/issues/1364
 		#
 		if script -aq ${_logfile} pkg repo ${_real_repo_path}/ \
-		    signing_command: ${PKG_REPO_SIGNING_COMMAND} >/dev/null 2>&1; then
+		    ${PKG_REPO_SIGNING_COMMAND} >/dev/null 2>&1; then
 			echo "Done!" | tee -a ${_logfile}
 		else
 			echo "Failed!" | tee -a ${_logfile}
@@ -1584,7 +1584,6 @@ pkg_repo_rsync() {
 					--include=\"/*\" --include=\"*/.real*\" --include=\"*/.real*/***\" \
 					--exclude=\"*\" \
 					${PKG_FINAL_RSYNC_USERNAME}@${_pkg_final_rsync_hostname}:${PKG_FINAL_RSYNC_DESTDIR}"
-				echo ${_cmd}
 
 				echo -n ">>> Sending updated packages to ${_pkg_final_rsync_hostname}... " | tee -a ${_logfile}
 				if script -aq ${_logfile} ssh -v -p ${PKG_RSYNC_SSH_PORT} -o StrictHostKeyChecking=no \
