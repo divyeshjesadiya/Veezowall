@@ -2016,7 +2016,7 @@ poudriere_bulk() {
 			print_error_pfS
 		fi
 
-		pkg_repo_rsync "/usr/local/poudriere/data/packages/${jail_name}-${POUDRIERE_PORTS_NAME}"
+		#pkg_repo_rsync "/usr/local/poudriere/data/packages/${jail_name}-${POUDRIERE_PORTS_NAME}"
 	done
 }
 
