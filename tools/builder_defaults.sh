@@ -244,7 +244,7 @@ esac
 export PKG_RSYNC_HOSTNAME=${PKG_RSYNC_HOSTNAME:-${STAGING_HOSTNAME}}
 export PKG_RSYNC_USERNAME=${PKG_RSYNC_USERNAME:-"root"}
 export PKG_RSYNC_SSH_PORT=${PKG_RSYNC_SSH_PORT:-"2224"}
-export PKG_RSYNC_DESTDIR=${PKG_RSYNC_DESTDIR:-"/usr/local/poudriere/data/packages/AISense_v2_3_2_amd64-AISense_v2_3_2"}
+export PKG_RSYNC_DESTDIR=${PKG_RSYNC_DESTDIR:-"/usr/local/poudriere/data/packages/RELEASE"}
 export PKG_RSYNC_LOGS=${PKG_RSYNC_LOGS:-"/usr/local/poudriere/data/packages/AISense_v2_3_2_amd64-AISense_v2_3_2/logs/${POUDRIERE_BRANCH}/${TARGET}"}
 
 # Final packages server
