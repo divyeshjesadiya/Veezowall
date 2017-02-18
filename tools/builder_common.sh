@@ -1609,7 +1609,7 @@ pkg_repo_rsync() {
 		#		fi
 		#	done
 		#fi
-	#done
+	done
 }
 
 poudriere_create_patch() {
