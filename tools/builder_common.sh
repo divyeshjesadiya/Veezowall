@@ -1571,10 +1571,10 @@ pkg_repo_rsync() {
 			print_error_pfS
 		fi
 
-	#	if [ -z "${USE_PKG_REPO_STAGING}" -o -n "${_ignore_final_rsync}" ]; then
-	#		return
-	#	fi
-#
+		if [ -z "${USE_PKG_REPO_STAGING}" -o -n "${_ignore_final_rsync}" ]; then
+			return
+		fi
+
 		#if [ -n "${_IS_RELEASE}" -o "${_repo_path_param}" = "${CORE_PKG_PATH}" ]; then
 		#	for _pkg_final_rsync_hostname in ${PKG_FINAL_RSYNC_HOSTNAME}; do
 		#		# Send .real* directories first to prevent having a broken repo while transfer happens
