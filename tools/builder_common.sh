@@ -1538,7 +1538,7 @@ pkg_repo_rsync() {
 		local _pkgfile="${_repo_path}/Latest/pkg.txz"
 		if [ -e ${_pkgfile} ]; then
 			echo -n ">>> Signing Latest/pkg.txz for bootstraping... " | tee -a ${_logfile}
-			if script -aq ${_logfile} echo -n "$(sha256 -q pkg.txz)" | openssl dgst -sha256 -sign ${PKG_REPO_SIGNING_COMMAND} \
+			if script -aq ${_logfile} echo -n "$(sha256 -q ${_repo_path}/Latest/pkg.txz)" | openssl dgst -sha256 -sign ${PKG_REPO_SIGNING_COMMAND} \
 				-binary -out ${_repo_path}/Latest/pkg.txz.pubkeysig; then
 				echo "Done!" | tee -a ${_logfile}
 			else
