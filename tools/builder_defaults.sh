@@ -321,8 +321,8 @@ export UPDATES_TARBALL_FILENAME=${UPDATES_TARBALL_FILENAME:-"${UPDATESDIR}/${PRO
 
 # Rsync data to send snapshots
 export RSYNCIP=${RSYNCIP:-${STAGING_HOSTNAME}}
-export RSYNCUSER=${RSYNCUSER:-"snapshots"}
-export RSYNCPATH=${RSYNCPATH:-"/usr/local/www/snapshots/${TARGET}/${PRODUCT_NAME}_${GIT_REPO_BRANCH_OR_TAG}"}
+export RSYNCUSER=${RSYNCUSER:-"root"}
+export RSYNCPATH=${RSYNCPATH:-"/usr/local/poudriere/data/packages/snapshots/${TARGET}/${PRODUCT_NAME}_${GIT_REPO_BRANCH_OR_TAG}"}
 
 # staging area used on snapshots build
 STAGINGAREA=${STAGINGAREA:-"${SCRATCHDIR}/staging"}
