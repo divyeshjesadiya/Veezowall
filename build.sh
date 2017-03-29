@@ -5,6 +5,18 @@
 #
 set +e
 usage() {
+	echo ""
+	echo ""
+	echo ' $$$$$$\  $$$$$$\  $$$$$$\'                                          
+	echo '$$  __$$\ \_$$  _|$$  __$$\'                                         
+	echo '$$ /  $$ |  $$ |  $$ /  \__| $$$$$$\  $$$$$$$\   $$$$$$$\  $$$$$$\'  
+	echo '$$$$$$$$ |  $$ |  \$$$$$$\  $$  __$$\ $$  __$$\ $$  _____|$$  __$$\' 
+	echo '$$  __$$ |  $$ |   \____$$\ $$$$$$$$ |$$ |  $$ |\$$$$$$\  $$$$$$$$ |'
+	echo '$$ |  $$ |  $$ |  $$\   $$ |$$   ____|$$ |  $$ | \____$$\ $$   ____|'
+	echo '$$ |  $$ |$$$$$$\ \$$$$$$  |\$$$$$$$\ $$ |  $$ |$$$$$$$  |\$$$$$$$\' 
+	echo '\__|  \__|\______| \______/  \_______|\__|  \__|\_______/  \_______|'
+	echo ""
+	echo ""
 	echo "Usage $0 [options] [ iso | ova | memstick | memstickserial | memstickadi | fullupdate | all | none ]"
 	echo "		all = iso memstick memstickserial memstickadi fullupdate"
 	echo "		none = upgrade only pkg repo"
