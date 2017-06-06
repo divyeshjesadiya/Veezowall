@@ -1594,19 +1594,19 @@ pkg_repo_rsync() {
 					print_error_pfS
 				fi
 
-		#		_cmd="rsync -Have \"ssh -p ${PKG_FINAL_RSYNC_SSH_PORT}\" \
-		#			--timeout=60 --delete-delay ${PKG_RSYNC_DESTDIR}/./${_repo_base%%-core}* \
-		#			${PKG_FINAL_RSYNC_USERNAME}@${_pkg_final_rsync_hostname}:${PKG_FINAL_RSYNC_DESTDIR}"
+				_cmd="rsync -Have \"ssh -p ${PKG_FINAL_RSYNC_SSH_PORT}\" \
+					--timeout=60 --delete-delay ${PKG_RSYNC_DESTDIR}/./${_repo_base%%-core}* \
+					${PKG_FINAL_RSYNC_USERNAME}@${_pkg_final_rsync_hostname}:${PKG_FINAL_RSYNC_DESTDIR}"
 
-		#		echo -n ">>> Sending updated repositories metadata to ${_pkg_final_rsync_hostname}... " | tee -a ${_logfile}
-		#		if script -aq ${_logfile} ssh -p ${PKG_RSYNC_SSH_PORT} \
-		#			${PKG_RSYNC_USERNAME}@${_pkg_rsync_hostname} ${_cmd} >/dev/null 2>&1; then
-		#			echo "Done!" | tee -a ${_logfile}
-		#		else
-		#			echo "Failed!" | tee -a ${_logfile}
-		#			echo ">>> ERROR: An error occurred sending repo to final hostname"
-		#			print_error_pfS
-		#		fi
+				echo -n ">>> Sending updated repositories metadata to ${_pkg_final_rsync_hostname}... " | tee -a ${_logfile}
+				if script -aq ${_logfile} ssh -p ${PKG_RSYNC_SSH_PORT} \
+					${PKG_RSYNC_USERNAME}@${_pkg_rsync_hostname} ${_cmd} >/dev/null 2>&1; then
+					echo "Done!" | tee -a ${_logfile}
+				else
+					echo "Failed!" | tee -a ${_logfile}
+					echo ">>> ERROR: An error occurred sending repo to final hostname"
+					print_error_pfS
+				fi
 			done
 		fi
 	done
