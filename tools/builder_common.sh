@@ -1578,7 +1578,7 @@ pkg_repo_rsync() {
 		if [ -n "${_IS_RELEASE}" -o "${_repo_path_param}" = "${CORE_PKG_PATH}" ]; then
 			for _pkg_final_rsync_hostname in ${PKG_FINAL_RSYNC_HOSTNAME}; do
 				# Send .real* directories first to prevent having a broken repo while transfer happens
-				local _cmd="/usr/local/bin/rsync -Have \"ssh -vvv -p ${PKG_FINAL_RSYNC_SSH_PORT} -o StrictHostKeyChecking=no\" \
+				local _cmd="/usr/local/bin/rsync -Have \"ssh -vvv -i /root/.ssh/id_rsa.pub -p ${PKG_FINAL_RSYNC_SSH_PORT} -o StrictHostKeyChecking=no\" \
 					--timeout=120  ${PKG_RSYNC_DESTDIR}/./${_repo_base%%-core}* \
 					--include=\"/*\" --include=\"*/.real*\" --include=\"*/.real*/***\" \
 					--exclude=\"*\" \
