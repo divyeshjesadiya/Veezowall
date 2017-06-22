@@ -2103,7 +2103,7 @@ snapshots_copy_to_staging_iso_updates() {
 
 snapshots_scp_files() {
 	if [ -z "${RSYNC_COPY_ARGUMENTS}" ]; then
-		RSYNC_COPY_ARGUMENTS="-ave ssh --timeout=60"
+		RSYNC_COPY_ARGUMENTS="-ave ssh -p ${RSYNC_SSH_PORT} --timeout=60"
 	fi
 
 	snapshots_update_status ">>> Copying core pkg repo to ${PKG_RSYNC_HOSTNAME}"
@@ -2114,14 +2114,14 @@ snapshots_scp_files() {
 		snapshots_update_status ">>> Copying files to ${_rsyncip}"
 
 		# Ensure directory(s) are available
-		ssh ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/installer"
-		ssh ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/updates"
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/installer"
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/updates"
 		if [ -d $STAGINGAREA/virtualization ]; then
-			ssh ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/virtualization"
+			ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/virtualization"
 		fi
-		ssh ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/.updaters"
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "mkdir -p ${RSYNCPATH}/.updaters"
 		# ensure permissions are correct for r+w
-		ssh ${RSYNCUSER}@${_rsyncip} "chmod -R ug+rw ${RSYNCPATH}/."
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "chmod -R ug+rw ${RSYNCPATH}/."
 		rsync $RSYNC_COPY_ARGUMENTS $STAGINGAREA/${PRODUCT_NAME}${PRODUCT_NAME_SUFFIX}-*iso* \
 			${RSYNCUSER}@${_rsyncip}:${RSYNCPATH}/installer/
 		rsync $RSYNC_COPY_ARGUMENTS $STAGINGAREA/${PRODUCT_NAME}${PRODUCT_NAME_SUFFIX}-memstick* \
@@ -2135,13 +2135,13 @@ snapshots_scp_files() {
 
 		# Rather than copy these twice, use ln to link to the latest one.
 
-		ssh ${RSYNCUSER}@${_rsyncip} "rm -f ${RSYNCPATH}/.updaters/latest.tgz"
-		ssh ${RSYNCUSER}@${_rsyncip} "rm -f ${RSYNCPATH}/.updaters/latest.tgz.sha256"
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "rm -f ${RSYNCPATH}/.updaters/latest.tgz"
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "rm -f ${RSYNCPATH}/.updaters/latest.tgz.sha256"
 
 		LATESTFILENAME=$(basename ${UPDATES_TARBALL_FILENAME})
-		ssh ${RSYNCUSER}@${_rsyncip} "ln -s ${RSYNCPATH}/updates/${LATESTFILENAME} \
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "ln -s ${RSYNCPATH}/updates/${LATESTFILENAME} \
 			${RSYNCPATH}/.updaters/latest.tgz"
-		ssh ${RSYNCUSER}@${_rsyncip} "ln -s ${RSYNCPATH}/updates/${LATESTFILENAME}.sha256 \
+		ssh -p ${RSYNC_SSH_PORT} ${RSYNCUSER}@${_rsyncip} "ln -s ${RSYNCPATH}/updates/${LATESTFILENAME}.sha256 \
 			${RSYNCPATH}/.updaters/latest.tgz.sha256"
 
 		rsync $RSYNC_COPY_ARGUMENTS $STAGINGAREA/version* \
