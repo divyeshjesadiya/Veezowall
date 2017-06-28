@@ -1527,7 +1527,8 @@ pkg_repo_rsync() {
 		# https://github.com/freebsd/pkg/issues/1364
 		#
 		if script -aq ${_logfile} pkg repo ${_real_repo_path}/ \
-		    ${PKG_REPO_SIGNING_COMMAND} >/dev/null 2>&1; then
+		     >/dev/null 2>&1; then	
+		#    ${PKG_REPO_SIGNING_COMMAND} >/dev/null 2>&1; then
 			echo "Done!" | tee -a ${_logfile}
 		else
 			echo "Failed!" | tee -a ${_logfile}
@@ -1536,17 +1537,17 @@ pkg_repo_rsync() {
 		fi
 
 		local _pkgfile="${_repo_path}/Latest/pkg.txz"
-		if [ -e ${_pkgfile} ]; then
-			echo -n ">>> Signing Latest/pkg.txz for bootstraping... " | tee -a ${_logfile}
-			if script -aq ${_logfile} echo -n "$(sha256 -q ${_repo_path}/Latest/pkg.txz)" | openssl dgst -sha256 -sign ${PKG_REPO_SIGNING_COMMAND} \
-				-binary -out ${_repo_path}/Latest/pkg.txz.pubkeysig; then
-				echo "Done!" | tee -a ${_logfile}
-			else
-				echo "Failed!" | tee -a ${_logfile}
-				echo ">>> ERROR: An error occurred trying to sign Latest/pkg.txz"
-				print_error_pfS
-			fi
-		fi
+		#if [ -e ${_pkgfile} ]; then
+		#	echo -n ">>> Signing Latest/pkg.txz for bootstraping... " | tee -a ${_logfile}
+		#	if script -aq ${_logfile} echo -n "$(sha256 -q ${_repo_path}/Latest/pkg.txz)" | openssl dgst -sha256 -sign ${PKG_REPO_SIGNING_COMMAND} \
+		#		-binary -out ${_repo_path}/Latest/pkg.txz.pubkeysig; then
+		#		echo "Done!" | tee -a ${_logfile}
+		#	else
+		#		echo "Failed!" | tee -a ${_logfile}
+		#		echo ">>> ERROR: An error occurred trying to sign Latest/pkg.txz"
+		#		print_error_pfS
+		#	fi
+		#fi
 	fi
 
 	if [ -n "${DO_NOT_UPLOAD}" ]; then
