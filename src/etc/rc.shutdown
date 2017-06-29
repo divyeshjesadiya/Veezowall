@@ -56,7 +56,7 @@ if ! /usr/bin/lockf -s -t 30 /tmp/config.lock /usr/bin/true; then
 fi
 
 # Read product_name from $g, defaults to pfSense
-product=$(/usr/local/sbin/read_global_var product_name pfSense)
+product=$(/usr/local/sbin/read_global_var product_name AISense)
 
 echo
 echo "${product} is now shutting down ..."

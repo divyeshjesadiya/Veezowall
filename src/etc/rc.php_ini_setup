@@ -154,6 +154,8 @@ PHPMODULES="$PHPMODULES zmq"
 PHPMODULES="$PHPMODULES ssh2"
 # pfSense extensions
 PHPMODULES="$PHPMODULES pfSense"
+# AISense extensions
+PHPMODULES="$PHPMODULES AISense"
 # json
 PHPMODULES="$PHPMODULES json"
 # bcmath

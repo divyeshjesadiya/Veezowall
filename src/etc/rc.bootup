@@ -135,7 +135,7 @@ require_once("/etc/inc/captiveportal.inc");
 echo ".";
 require_once("/etc/inc/rrd.inc");
 echo ".";
-require_once("/etc/inc/pfsense-utils.inc");
+require_once("/etc/inc/aisense-utils.inc");
 echo ".";
 
 /* get system memory amount */

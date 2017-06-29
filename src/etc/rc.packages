@@ -58,7 +58,7 @@ require_once("filter.inc");
 require_once("shaper.inc");
 require_once("captiveportal.inc");
 require_once("pkg-utils.inc");
-require_once("pfsense-utils.inc");
+require_once("aisense-utils.inc");
 
 function usage() {
 	print "Usage: rc.packages PKG_NAME (POST-INSTALL|DEINSTALL|POST-DEINSTALL)\n";
