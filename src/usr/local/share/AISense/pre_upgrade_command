@@ -63,9 +63,9 @@ echo $PRIOR_VERSION > /tmp/pre_upgrade_version
 /usr/bin/sed -i '' 's/^\(\/.*[[:space:]]*\/[[:space:]]*ufs[[:space:]]*\)rw,sync\([[:space:]]*[[:digit:]][[:space:]]*[[:digit:]]\)$/\1rw\2/' /etc/fstab
 
 # Uninstall all packages before upgrade to 2.3
-PFSENSE_VERSION=$(cat /etc/version)
+AISENSE_VERSION=$(cat /etc/version)
 
-if echo "$PFSENSE_VERSION" | grep -q '^1.2'; then
+if echo "$AISENSE_VERSION" | grep -q '^1.2'; then
 	UNINSTALL="uninstall_package_from_name"
 else
 	UNINSTALL="uninstall_package"
