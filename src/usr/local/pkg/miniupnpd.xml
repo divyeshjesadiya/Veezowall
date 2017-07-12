@@ -137,7 +137,7 @@
 			<fielddescr>Custom model number</fielddescr>
 			<fieldname>modelnumber</fieldname>
 			<type>input</type>
-			<description>If left blank the default value of the firmware version of pfSense will be used.</description>
+			<description>If left blank the default value of the firmware version of AISense will be used.</description>
 		</field>
 	</fields>
 	<custom_php_command_before_form>
