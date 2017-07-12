@@ -492,11 +492,11 @@ msgid "This parent interface and VLAN already created."
 msgstr ""
 
 #: src/etc/inc/config.inc:112
-msgid "Upgrading m0n0wall configuration to pfSense... "
+msgid "Upgrading m0n0wall configuration to AISense... "
 msgstr ""
 
 #: src/etc/inc/config.inc:115
-msgid "ERROR!  Could not convert m0n0wall -> pfsense in config.xml"
+msgid "ERROR!  Could not convert m0n0wall -> aisense in config.xml"
 msgstr ""
 
 #: src/etc/inc/config.inc:145
@@ -2604,7 +2604,7 @@ msgstr ""
 msgid "Mobile Client"
 msgstr ""
 
-#: src/etc/inc/ipsec.inc:440 src/etc/inc/pfsense-utils.inc:2943
+#: src/etc/inc/ipsec.inc:440 src/etc/inc/aisense-utils.inc:2943
 #: src/etc/inc/shaper.inc:3904 src/etc/inc/shaper.inc:4208
 #: src/usr/local/www/diag_pftop.php:150
 #: src/usr/local/www/firewall_nat_edit.php:926
@@ -2865,147 +2865,147 @@ msgstr ""
 msgid "Service not running?"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:489
+#: src/etc/inc/aisense-utils.inc:489
 msgid "After synch increase advertising skew"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:536
+#: src/etc/inc/aisense-utils.inc:536
 msgid "Error creating socket!"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:537
+#: src/etc/inc/aisense-utils.inc:537
 #, php-format
 msgid "Error code is '%1$s' - %2$s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:542
+#: src/etc/inc/aisense-utils.inc:542
 #, php-format
 msgid "setsockopt() failed, error: %s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:546
+#: src/etc/inc/aisense-utils.inc:546
 #, php-format
 msgid "Magic Packet sent (%1$s) to (%2$s) MAC=%3$s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:610 src/etc/inc/pfsense-utils.inc:632
+#: src/etc/inc/aisense-utils.inc:610 src/etc/inc/aisense-utils.inc:632
 #, php-format
 msgid "Restored %s of config file (maybe from CARP partner)"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:767
+#: src/etc/inc/aisense-utils.inc:767
 msgid "reload_interfaces_sync() is starting."
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:776
+#: src/etc/inc/aisense-utils.inc:776
 msgid "Enabling system routing"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:780
+#: src/etc/inc/aisense-utils.inc:780
 msgid "Cleaning up Interfaces"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1182
+#: src/etc/inc/aisense-utils.inc:1182
 msgid "No history data found!"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1314
+#: src/etc/inc/aisense-utils.inc:1314
 msgid "device not present! Is the modem attached to the system?"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1383
+#: src/etc/inc/aisense-utils.inc:1383
 msgid "running"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1384 src/usr/local/www/graph.php:229
+#: src/etc/inc/aisense-utils.inc:1384 src/usr/local/www/graph.php:229
 msgid "up"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1429
+#: src/etc/inc/aisense-utils.inc:1429
 msgid "blocking"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1429
+#: src/etc/inc/aisense-utils.inc:1429
 msgid "check for ethernet loops"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1432
+#: src/etc/inc/aisense-utils.inc:1432
 msgid "learning"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1435
+#: src/etc/inc/aisense-utils.inc:1435
 msgid "forwarding"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1569
+#: src/etc/inc/aisense-utils.inc:1569
 #, php-format
 msgid "DNSCACHE: Found old IP %1$s and new IP %2$s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1589
+#: src/etc/inc/aisense-utils.inc:1589
 #, php-format
 msgid "Loading %s cryptographic accelerator module."
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1606
+#: src/etc/inc/aisense-utils.inc:1606
 #, php-format
 msgid "Loading %s thermal monitor module."
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1682 src/etc/inc/pfsense-utils.inc:1737
+#: src/etc/inc/aisense-utils.inc:1682 src/etc/inc/aisense-utils.inc:1737
 #, php-format
 msgid "Download file failed with status code %1$s. URL: %2$s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1933
+#: src/etc/inc/aisense-utils.inc:1933
 #, php-format
 msgid "Could not process empty file from alias: %s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1938
+#: src/etc/inc/aisense-utils.inc:1938
 #, php-format
 msgid "Could not process aliases from alias: %s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:1995
+#: src/etc/inc/aisense-utils.inc:1995
 #, php-format
 msgid "Failed to download alias %s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2024
+#: src/etc/inc/aisense-utils.inc:2024
 msgid ""
 "Alias archive is a .tar/tgz file which cannot be decompressed because "
 "utility is missing!"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2034
+#: src/etc/inc/aisense-utils.inc:2034
 #, php-format
 msgid "Could not open %s/aliases for writing!"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2040
+#: src/etc/inc/aisense-utils.inc:2040
 #, php-format
 msgid "The following file could not be read %1$s from %2$s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2763
+#: src/etc/inc/aisense-utils.inc:2763
 msgid "English"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2764
+#: src/etc/inc/aisense-utils.inc:2764
 msgid "Portuguese (Brazil)"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2765
+#: src/etc/inc/aisense-utils.inc:2765
 msgid "Turkish"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2951 src/etc/inc/pfsense-utils.inc:2966
-#: src/etc/inc/pfsense-utils.inc:2991
+#: src/etc/inc/aisense-utils.inc:2951 src/etc/inc/aisense-utils.inc:2966
+#: src/etc/inc/aisense-utils.inc:2991
 msgid "No Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2961 src/etc/inc/pfsense-utils.inc:3003
+#: src/etc/inc/aisense-utils.inc:2961 src/etc/inc/aisense-utils.inc:3003
 #: src/usr/local/www/firewall_nat_out.php:262
 #: src/usr/local/www/firewall_nat_out.php:266
 #: src/usr/local/www/interfaces.php:873 src/usr/local/www/interfaces.php:2933
@@ -3023,89 +3023,89 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2967
+#: src/etc/inc/aisense-utils.inc:2967
 msgid "Restricted Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2968
+#: src/etc/inc/aisense-utils.inc:2968
 msgid "Valid Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2969
+#: src/etc/inc/aisense-utils.inc:2969
 msgid "Restricted Regional Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2970
+#: src/etc/inc/aisense-utils.inc:2970
 msgid "Powersaving Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2976
+#: src/etc/inc/aisense-utils.inc:2976
 msgid "Invalid SIM/locked State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2977
+#: src/etc/inc/aisense-utils.inc:2977
 msgid "Valid SIM State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2978
+#: src/etc/inc/aisense-utils.inc:2978
 msgid "Invalid SIM CS State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2979
+#: src/etc/inc/aisense-utils.inc:2979
 msgid "Invalid SIM PS State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2980
+#: src/etc/inc/aisense-utils.inc:2980
 msgid "Invalid SIM CS/PS State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2981
+#: src/etc/inc/aisense-utils.inc:2981
 msgid "Missing SIM State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:2992
+#: src/etc/inc/aisense-utils.inc:2992
 msgid "Limited Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3008
+#: src/etc/inc/aisense-utils.inc:3008
 msgid "Initializing Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3009
+#: src/etc/inc/aisense-utils.inc:3009
 msgid "Network Lock error Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3010
+#: src/etc/inc/aisense-utils.inc:3010
 msgid "Network Locked Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3011
+#: src/etc/inc/aisense-utils.inc:3011
 msgid "Unlocked or correct MCC/MNC Service"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3017
+#: src/etc/inc/aisense-utils.inc:3017
 msgid "No action State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3018
+#: src/etc/inc/aisense-utils.inc:3018
 msgid "Network lock State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3019
+#: src/etc/inc/aisense-utils.inc:3019
 msgid "(U)SIM card lock State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3020
+#: src/etc/inc/aisense-utils.inc:3020
 msgid "Network Lock and (U)SIM card Lock State"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3111
+#: src/etc/inc/aisense-utils.inc:3111
 #, php-format
 msgid ""
 "Alias table restore failed exited with %1$s, the error is: %2$s %3$s%4$s"
 msgstr ""
 
-#: src/etc/inc/pfsense-utils.inc:3113
+#: src/etc/inc/aisense-utils.inc:3113
 #, php-format
 msgid ""
 "Alias table restore succeeded exited with %1$s, the result is: %2$s %3$s%4$s"
@@ -3531,7 +3531,7 @@ msgid "WebCfg - Crash reporter"
 msgstr ""
 
 #: src/etc/inc/priv.defs.inc:24
-msgid "Uploads crash reports to pfSense and or deletes crash reports."
+msgid "Uploads crash reports to AISense and or deletes crash reports."
 msgstr ""
 
 #: src/etc/inc/priv.defs.inc:29
@@ -5188,11 +5188,11 @@ msgid "Allow access to the 'OpenVPN: Servers' page."
 msgstr ""
 
 #: src/etc/inc/priv.defs.inc:1271
-msgid "WebCfg - pfSense wizard subsystem"
+msgid "WebCfg - AISense wizard subsystem"
 msgstr ""
 
 #: src/etc/inc/priv.defs.inc:1272
-msgid "Allow access to the 'pfSense wizard subsystem' page."
+msgid "Allow access to the 'AISense wizard subsystem' page."
 msgstr ""
 
 #: src/etc/inc/priv.defs.inc:1277
@@ -5561,7 +5561,7 @@ msgid ""
 msgstr ""
 
 #: src/etc/inc/services.inc:2584
-msgid "pfSense specific crontab entries"
+msgid "AISense specific crontab entries"
 msgstr ""
 
 #: src/etc/inc/services.inc:2585
@@ -7221,7 +7221,7 @@ msgstr ""
 
 #: src/usr/local/www/crash_reporter.php:157
 msgid ""
-"The programming debug logs can be submitted to the pfSense developers for "
+"The programming debug logs can be submitted to the AISense developers for "
 "inspection."
 msgstr ""
 
@@ -7492,12 +7492,12 @@ msgstr ""
 
 #: src/usr/local/www/diag_backup.php:320
 msgid ""
-"The uploaded file does not appear to contain an encrypted pfsense "
+"The uploaded file does not appear to contain an encrypted aisense "
 "configuration."
 msgstr ""
 
 #: src/usr/local/www/diag_backup.php:327
-msgid "Upgrading m0n0wall configuration to pfsense."
+msgid "Upgrading m0n0wall configuration to aisense."
 msgstr ""
 
 #: src/usr/local/www/diag_backup.php:335 src/usr/local/www/diag_backup.php:338
@@ -7522,7 +7522,7 @@ msgid "Restore serial console enabling in configuration."
 msgstr ""
 
 #: src/usr/local/www/diag_backup.php:487
-msgid "The m0n0wall configuration has been restored and upgraded to pfSense."
+msgid "The m0n0wall configuration has been restored and upgraded to AISense."
 msgstr ""
 
 #: src/usr/local/www/diag_backup.php:515 src/usr/local/www/diag_backup.php:538
@@ -13691,7 +13691,7 @@ msgid "Restart HTTPD"
 msgstr ""
 
 #: src/usr/local/www/head.inc:406
-msgid "pfSense Gold"
+msgid "AISense Gold"
 msgstr ""
 
 #: src/usr/local/www/head.inc:411
@@ -21185,7 +21185,7 @@ msgstr ""
 #: src/usr/local/www/services_ntpd_gps.php:256
 msgid ""
 "This option allows a predefined configuration to be selected. Default is the "
-"configuration of pfSense 2.1 and earlier (not recommended). Select Generic "
+"configuration of AISense 2.1 and earlier (not recommended). Select Generic "
 "if the GPS is not listed.<br /><br />The predefined configurations assume "
 "the GPS has already been set to NMEA mode."
 msgstr ""
@@ -22003,7 +22003,7 @@ msgstr ""
 
 #: src/usr/local/www/services_unbound.php:340
 msgid ""
-"The local-zone type used for the pfSense system domain (System | General "
+"The local-zone type used for the AISense system domain (System | General "
 "Setup | Domain).  Transparent is the default.  Local-Zone type descriptions "
 "are available in the unbound.conf(5) manual pages."
 msgstr ""
@@ -24059,7 +24059,7 @@ msgstr ""
 msgid ""
 "Syslog sends UDP datagrams to port 514 on the specified remote syslog "
 "server, unless another port is specified. Be sure to set syslogd on the "
-"remote server to accept syslog messages from pfSense."
+"remote server to accept syslog messages from AISense."
 msgstr ""
 
 #: src/usr/local/www/status_logs_vpn.php:75
@@ -24853,7 +24853,7 @@ msgstr ""
 #: src/usr/local/www/system_advanced_admin.php:543
 msgid ""
 "Select the preferred console if multiple consoles are present. The preferred "
-"console will show pfSense boot script output. All consoles display OS boot "
+"console will show AISense boot script output. All consoles display OS boot "
 "messages, console messages, and the console menu."
 msgstr ""
 
@@ -25652,7 +25652,7 @@ msgstr ""
 
 #: src/usr/local/www/system_advanced_misc.php:604
 msgid ""
-"Enable this option to not send HOST UUID to pfSense as part of User-Agent "
+"Enable this option to not send HOST UUID to AISense as part of User-Agent "
 "header."
 msgstr ""
 
@@ -31359,7 +31359,7 @@ msgid "FreeBSD default"
 msgstr ""
 
 #: src/usr/local/www/interfaces.php:2031
-msgid "pfSense Default"
+msgid "AISense Default"
 msgstr ""
 
 #: src/usr/local/www/interfaces.php:2039
@@ -32496,7 +32496,7 @@ msgstr ""
 
 #: src/usr/local/www/system_usermanager_settings.php:249
 msgid ""
-"<span id=\"ldaptestop\">Testing pfSense LDAP settings... One moment please..."
+"<span id=\"ldaptestop\">Testing AISense LDAP settings... One moment please..."
 msgstr ""
 
 #: src/usr/local/www/vpn_ipsec_mobile.php:507
