@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# pfSense-upgrade
+# AISense-upgrade
 #
 # part of pfSense (https://www.pfsense.org)
 # Copyright (c) 2015-2016 Electric Sheep Fencing, LLC
@@ -580,7 +580,7 @@ switch_active_nanobsd_partition() {
 		_exit 1
 	fi
 
-	# pfsense0 == part 1 / pfsense1 == part 2
+	# aisense0 == part 1 / aisense1 == part 2
 	if [ ${_i} -eq 0 ]; then
 		_i=2
 	else
@@ -668,7 +668,7 @@ pkg_install() {
 	_exec "pkg clean" "Cleaning up cache" mute ignore_result
 }
 
-# Reinstall every pfSense-pkg-* package
+# Reinstall every AISense-pkg-* package
 pkg_reinstall_all() {
 	for _pkg in $(pkg query -e '%a == 0' %n); do
 		case ${_pkg} in "${pkg_prefix}"* )
@@ -696,7 +696,7 @@ pkg_delete() {
 	_exec "pkg autoremove" "Removing stale packages" mute ignore_result
 }
 
-# Delete every pfSense-pkg-* package
+# Delete every AISense-pkg-* package
 pkg_delete_all() {
 	for _pkg in $(pkg query -e '%a == 0' %n); do
 		case ${_pkg} in "${pkg_prefix}"* )
