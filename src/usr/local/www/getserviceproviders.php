@@ -59,7 +59,7 @@
 ##|*MATCH=getserviceproviders.php*
 ##|-PRIV
 require_once("guiconfig.inc");
-require_once("pfsense-utils.inc");
+require_once("aisense-utils.inc");
 
 $serviceproviders_xml = "/usr/local/share/mobile-broadband-provider-info/serviceproviders.xml";
 $serviceproviders_contents = file_get_contents($serviceproviders_xml);

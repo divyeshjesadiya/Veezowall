@@ -195,7 +195,7 @@ function return_ext_menu($section) {
 			$colonpos = strpos($addresswithport, ":");
 
 			if ($colonpos !== false) {
-				//my url is actually just the IP address of the pfsense box
+				//my url is actually just the IP address of the aisense box
 				$myurl = substr($addresswithport, 0, $colonpos);
 			} else {
 				$myurl = $addresswithport;
@@ -448,7 +448,7 @@ if (($pagename === "index.php") && ($numColumns > 2)) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/"><img src="/logo.png" alt="pfSense" title="<?=$config['system']['hostname'] . '.' . $config['system']['domain']?>"/></a>
+			<a class="navbar-brand" href="/"><img src="/logo.png" alt="AISense" title="<?=$config['system']['hostname'] . '.' . $config['system']['domain']?>"/></a>
 		</div>
 		<div class="collapse navbar-collapse" id="pf-navbar">
 			<ul class="nav navbar-nav">

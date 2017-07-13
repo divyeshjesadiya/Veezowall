@@ -54,7 +54,7 @@
 ##|+PRIV
 ##|*IDENT=page-diagnostics-crash-reporter
 ##|*NAME=Crash reporter
-##|*DESCR=Uploads crash reports to pfSense and or deletes crash reports.
+##|*DESCR=Uploads crash reports to AISense and or deletes crash reports.
 ##|*MATCH=crash_reporter.php*
 ##|-PRIV
 
@@ -152,7 +152,7 @@ exec("/bin/cat /tmp/PHP_errors.log", $php_errors);
 		<div class="panel-body">
 			<div class="content">
 				<p>
-					<?=gettext("The programming debug logs can be submitted to the pfSense developers for inspection.")?>
+					<?=gettext("The programming debug logs can be submitted to the AISense developers for inspection.")?>
 					<i><?=gettext("Please double check the contents to ensure this information is acceptable to disclose before submitting.")?></i>
 				</p>
 				<textarea readonly style="width: 100%; height: 350px;">

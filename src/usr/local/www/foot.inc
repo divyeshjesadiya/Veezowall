@@ -72,8 +72,8 @@
 	<script src="/vendor/jquery/jquery-1.12.0.min.js"></script>
 	<script src="/vendor/jquery/jquery-ui-1.11.4.min.js"></script>
 	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/js/pfSense.js"></script>
-	<script src="/js/pfSenseHelpers.js"></script>
+	<script src="/js/AISense.js"></script>
+	<script src="/js/AISenseHelpers.js"></script>
 	<script src="/js/polyfills.js"></script>
 	<script src="/vendor/sortable/sortable.js"></script>
 
