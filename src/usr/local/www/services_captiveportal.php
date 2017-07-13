@@ -678,7 +678,7 @@ $section->addInput(new Form_Checkbox(
 	'Disable MAC filtering',
 	$pconfig['nomacfilter']
 ))->setHelp('If enabled no attempts will be made to ensure that the MAC address of clients stays the same while they are logged in. ' .
-			'This is required when the MAC address of the client cannot be determined (usually because there are routers between pfSense and the clients). ' .
+			'This is required when the MAC address of the client cannot be determined (usually because there are routers between AISense and the clients). ' .
 			'If this is enabled, RADIUS MAC authentication cannot be used.');
 
 $section->addInput(new Form_Checkbox(
@@ -1008,7 +1008,7 @@ $section->addInput(new Form_Select(
 	['default' => gettext('default'), 'cisco' => 'cisco']
 ))->setHelp('If RADIUS type is set to Cisco, in Access-Requests the value of Calling-Station-ID will be set to the client\'s IP address and the ' .
 			'Called-Station-Id to the client\'s MAC address. Default behavior is Calling-Station-Id = client\'s MAC address and ' .
-			'Called-Station-ID = pfSense\'s WAN IP address.');
+			'Called-Station-ID = AISense\'s WAN IP address.');
 
 $section->addInput(new Form_Checkbox(
 	'reverseacct',
@@ -1023,7 +1023,7 @@ $section->addInput(new Form_Input(
 	'NAS Identifier',
 	'text',
 	$pconfig['radiusnasid']
-))->setHelp('Specify a NAS identifier to override the default value (pfSense.localdomain)');
+))->setHelp('Specify a NAS identifier to override the default value (AISense.localdomain)');
 
 $section->addInput(new Form_Select(
 	'radmac_format',
