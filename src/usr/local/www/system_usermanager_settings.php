@@ -200,9 +200,9 @@ $tab_array[] = array(gettext("Settings"), true, "system_usermanager_settings.php
 $tab_array[] = array(gettext("Authentication Servers"), false, "system_authservers.php");
 display_top_tabs($tab_array);
 
-/* Default to pfsense backend type if none is defined */
+/* Default to aisense backend type if none is defined */
 if (!$pconfig['backend']) {
-	$pconfig['backend'] = "pfsense";
+	$pconfig['backend'] = "aisense";
 }
 
 $form = new Form;
@@ -244,7 +244,7 @@ $modal = new Modal("LDAP settings", "testresults", true);
 
 $modal->addInput(new Form_StaticText(
 	'Test results',
-	'<span id="ldaptestop">Testing pfSense LDAP settings... One moment please...' . $g['product_name'] . '</span>'
+	'<span id="ldaptestop">Testing AISense LDAP settings... One moment please...' . $g['product_name'] . '</span>'
 ));
 
 $form->add($modal);

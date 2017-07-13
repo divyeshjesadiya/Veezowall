@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<pfsensewizard>
+<aisensewizard>
 	<copyright><![CDATA[
 /*
  * traffic_shaper_wizard_dedicated.xml
@@ -57,9 +57,9 @@
 	<totalsteps>9</totalsteps>
 	<step>
 		<id>1</id>
-		<title>pfSense Traffic Shaper</title>
+		<title>AISense Traffic Shaper</title>
 		<disableheader>true</disableheader>
-		<description>This wizard will provide guidance through setting up the pfSense traffic shaper.&lt;br/&gt;&lt;br/&gt; The wizard may be stopped at any time by clicking the logo image at the top of the screen.
+		<description>This wizard will provide guidance through setting up the AISense traffic shaper.&lt;br/&gt;&lt;br/&gt; The wizard may be stopped at any time by clicking the logo image at the top of the screen.
 			&lt;br/&gt;&lt;br/&gt; Please be aware that Custom Bandwidths should not exceed 30% of the interface/link bandwidth. Keep this in mind during the wizard.
 		</description>
 		<fields>
@@ -1651,4 +1651,4 @@
 		<stepsubmitphpaction>step8_stepsubmitphpaction();</stepsubmitphpaction>
 		<includefile>/usr/local/www/wizards/traffic_shaper_wizard_dedicated.inc</includefile>
 	</step>
-</pfsensewizard>
+</aisensewizard>

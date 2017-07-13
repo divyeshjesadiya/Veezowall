@@ -579,7 +579,7 @@ if ($pkg['tabs'] != "") {
 		$colonpos = strpos($addresswithport, ":");
 
 		if ($colonpos !== False) {
-			//my url is actually just the IP address of the pfsense box
+			//my url is actually just the IP address of the aisense box
 			$myurl = substr($addresswithport, 0, $colonpos);
 		} else {
 			$myurl = $addresswithport;

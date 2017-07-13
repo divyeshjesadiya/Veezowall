@@ -576,7 +576,7 @@ $section->addInput(new Form_Input(
 
 $form->add($section);
 
-if ($g['platform'] == "pfSense") {
+if ($g['platform'] == "AISense") {
 	$section = new Form_Section('Hardware Settings');
 
 	$opts = array(0.5,  1, 2,  3,  4,  5,  7.5,  10,  15,  20,  30,  60);
@@ -600,7 +600,7 @@ $section->addInput(new Form_Checkbox(
 	'Host UUID',
 	'Do NOT send HOST UUID with user agent',
 	$pconfig['do_not_send_host_uuid']
-))->setHelp('Enable this option to not send HOST UUID to pfSense as part of User-Agent header.');
+))->setHelp('Enable this option to not send HOST UUID to AISense as part of User-Agent header.');
 
 $form->add($section);
 

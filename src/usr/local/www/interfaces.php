@@ -2027,9 +2027,9 @@ $group->add(new Form_Checkbox(
 $group->add(new Form_Checkbox(
 	'adv_dhcp_pt_values',
 	null,
-	'pfSense Default',
+	'AISense Default',
 	null,
-	'pfSense'
+	'AISense'
 ))->displayAsRadio();
 
 $group->add(new Form_Checkbox(
@@ -3571,7 +3571,7 @@ events.push(function() {
 	function setPresets(val) {
 		// timeout, retry, select-timeout, reboot, backoff-cutoff, initial-interval
 		if (val == "DHCP")		setPresetsnow("60", "300", "0", "10", "120", "10");
-		if (val == "pfSense")	setPresetsnow("60", "15", "0", "", "", "1");
+		if (val == "AISense")	setPresetsnow("60", "15", "0", "", "", "1");
 		if (val == "SavedCfg")	setPresetsnow("<?=htmlspecialchars($pconfig['adv_dhcp_pt_timeout']);?>", "<?=htmlspecialchars($pconfig['adv_dhcp_pt_retry']);?>", "<?=htmlspecialchars($pconfig['adv_dhcp_pt_select_timeout']);?>", "<?=htmlspecialchars($pconfig['adv_dhcp_pt_reboot']);?>", "<?=htmlspecialchars($pconfig['adv_dhcp_pt_backoff_cutoff']);?>", "<?=htmlspecialchars($pconfig['adv_dhcp_pt_initial_interval']);?>");
 		if (val == "Clear")		setPresetsnow("", "", "", "", "", "");
 	}

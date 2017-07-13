@@ -52,9 +52,9 @@
  */
 
 ##|+PRIV
-##|*IDENT=page-pfsensewizardsubsystem
-##|*NAME=pfSense wizard subsystem
-##|*DESCR=Allow access to the 'pfSense wizard subsystem' page.
+##|*IDENT=page-aisensewizardsubsystem
+##|*NAME=AISense wizard subsystem
+##|*DESCR=Allow access to the 'AISense wizard subsystem' page.
 ##|*MATCH=wizard.php*
 ##|-PRIV
 
@@ -97,7 +97,7 @@ if (empty($xml)) {
 		die;
 	}
 	if (file_exists($wizard_full_path)) {
-		$pkg = parse_xml_config_pkg($wizard_full_path, "pfsensewizard");
+		$pkg = parse_xml_config_pkg($wizard_full_path, "aisensewizard");
 	} else {
 		print_info_box(sprintf(gettext("Could not open %s."), $xml), 'danger');
 		die;

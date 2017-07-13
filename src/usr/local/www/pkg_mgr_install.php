@@ -73,7 +73,7 @@ $firmwareupdate = false;
 $guitimeout = 90;	// Seconds to wait before reloading the page after reboot
 $guiretry = 20;		// Seconds to try again if $guitimeout was not long enough
 //---------------------------------------------------------------------------------------------------------------------
-// After an installation or removal has been started (mwexec(/usr/local/sbin/pfSense-upgrade-GUI.sh . . . )) AJAX calls
+// After an installation or removal has been started (mwexec(/usr/local/sbin/AISense-upgrade-GUI.sh . . . )) AJAX calls
 // are made to get status.
 // The log file is read and the newest progress record retrieved. The data is formatted
 // as JSON before being returned to the AJAX caller (at the bottom of this file)

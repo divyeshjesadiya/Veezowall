@@ -92,7 +92,7 @@ $mandfldhtml = "";		/* display this before mandatory input fields */
 $mandfldhtmlspc = "";	/* same as above, but with spacing */
 
 if (!function_exists('set_language')) {
-	require_once("pfsense-utils.inc");
+	require_once("aisense-utils.inc");
 }
 
 set_language();
@@ -947,7 +947,7 @@ function echo_array($array, $return_me = false) {
 	}
 }
 
-/****f* pfsense-utils/display_top_tabs
+/****f* aisense-utils/display_top_tabs
  * NAME
  *	 display_top_tabs - display tabs with rounded edges
  * INPUTS
