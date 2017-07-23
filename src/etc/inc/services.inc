@@ -2339,7 +2339,7 @@ EOD;
 		}
 
 		$platform = trim(file_get_contents('/etc/platform'));
-		if (($platform == "pfSense") && ($g['product_name'] != "pfSense")) {
+		if (($platform == "AISense") && ($g['product_name'] != "AISense")) {
 			$platform = $g['product_name'];
 		}
 		$sysDescr = "{$g['product_name']} " . php_uname("n") .
@@ -2656,7 +2656,7 @@ function configure_cron() {
 
 	for ($i = 0; $i < count($crontab_contents); $i++) {
 		$cron_item =& $crontab_contents[$i];
-		if (strpos($cron_item, "# pfSense specific crontab entries") !== false) {
+		if (strpos($cron_item, "# AISense specific crontab entries") !== false) {
 			array_splice($crontab_contents, $i - 1);
 			break;
 		}
@@ -2666,7 +2666,7 @@ function configure_cron() {
 
 	if (is_array($config['cron']['item'])) {
 		$crontab_contents .= "#\n";
-		$crontab_contents .= "# pfSense specific crontab entries\n";
+		$crontab_contents .= "# AISense specific crontab entries\n";
 		$crontab_contents .= "# " .gettext("Created:") . " " . date("F j, Y, g:i a") . "\n";
 		$crontab_contents .= "#\n";
 
