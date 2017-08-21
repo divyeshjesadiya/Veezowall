@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# /etc/rc.automount
+
+automount_conf="/etc/devd/automount_devd.conf"
+
+if [ -f "$automount_conf" ]; then
+
+else
+        cp -r /usr/local/www/automount/automount-1.5.7/automount_devd.conf /etc/devd/
+fi
+
+/etc/rc.d/devd restart 2>&1 >/dev/null

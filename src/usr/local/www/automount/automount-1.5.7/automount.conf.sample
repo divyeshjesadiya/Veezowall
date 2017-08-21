@@ -1,5 +1,5 @@
 USERUMOUNT=YES
 ATIME=NO
 REMOVEDIRS=YES
-FM=""
+FM="/bin/sh /etc/rc.d/usb_copy"
 USER=root

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+CURCONFIG="/media/*/config.xml"
+OLDCONFIG="/cf/conf/config.xml_ORIG"
+LAST_CONFIG=`ls /cf/conf/backup/ | awk -F_ '{print $1 $2}' | sort -n -k 2,2 | tail -1`
+
+if [ $(find $CURCONFIG | wc -l) -gt 0 ]; then
+        echo "Found"    
+        if [ -f "$OLDCONFIG" ]; then
+                rm -rf $OLDCONFIG
+        fi
+        mv /cf/conf/config.xml /cf/conf/config.xml_ORIG
+        cp -r $CURCONFIG /cf/conf/
+        /sbin/shutdown -r now
+else
+        echo "No valid configuration found in external drive"
+fi
