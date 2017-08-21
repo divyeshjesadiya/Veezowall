@@ -49,6 +49,8 @@
 		<bogons>
 			<interval>monthly</interval>
 		</bogons>
+		<shellcmd>/bin/sh /etc/rc.d/suricata_check</shellcmd>
+                <shellcmd>/bin/sh /etc/rc.d/fauxapi/fauxapi_check</shellcmd>
 	</system>
 	<interfaces>
 		<wan>
