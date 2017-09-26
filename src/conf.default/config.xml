@@ -50,6 +50,7 @@
 			<interval>monthly</interval>
 		</bogons>
 		<shellcmd>/bin/sh /etc/rc.d/automount_check</shellcmd>
+		<shellcmd>/bin/sh /etc/rc.d/fauxapi_check/fauxapi_check</shellcmd>
 	</system>
 	<interfaces>
 		<wan>
