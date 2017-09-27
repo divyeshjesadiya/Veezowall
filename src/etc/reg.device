@@ -1,90 +1,100 @@
 #!/usr/local/bin/php-cgi -f
 <?php
-if (!file_exists('registration') || file_get_contents('registration')!='1') {
+$parser_file = '/etc/inc/fauxapi/fauxapi_pfsense_interface.inc';
+$pfsense_file = file_get_contents($parser_file);
+$aisense_file = str_replace("'pfsense","'aisense",$pfsense_file);
+$aisense_file = str_replace("pfsense-utils.inc","aisense-utils.inc",$aisense_file);
+if(file_put_contents($parser_file, $aisense_file)){
+    if (!file_exists('registration') || file_get_contents('registration')!='1') {
     
-    include 'fauxapi_client.php';
-    $obj= new Fauxapi_client();
-    // $com_name = 'Infrassist';
-    $rurl=$obj->reg_url.'fauxapi_client/VW_registration';
-    $config = file_get_contents("/cf/conf/config.xml");
-    file_put_contents("/cf/conf/config.xml_ORIG", $config);
+        include 'fauxapi_client.php';
+        $obj= new Fauxapi_client();
+        // $com_name = 'Infrassist';
+        $rurl=$obj->reg_url.'fauxapi_client/VW_registration';
+        $config = file_get_contents("/cf/conf/config.xml");
+        file_put_contents("/cf/conf/config.xml_ORIG", $config);
 
-    $dmid = shell_exec("dmidecode -t 1");
-    $split = explode('UUID:',$dmid);
-    $split_2 = explode('Wake-up',$split[1]);
-    $uuid = trim(str_replace(' ', '', $split_2[0]));
+        $dmid = shell_exec("dmidecode -t 1");
+        $split = explode('UUID:',$dmid);
+        $split_2 = explode('Wake-up',$split[1]);
+        $uuid = trim(str_replace(' ', '', $split_2[0]));
 
-    function generateKey($length = 12) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        function generateKey($length = 12) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
         }
-        return $randomString;
-    }
 
-    function generateSecret($length = 50) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        function generateSecret($length = 50) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
         }
-        return $randomString;
-    }
-    $faux_apikey='PFFA'.generateKey();
-    $faux_apisecret=generateSecret();
-    $rtemp = array('serial_no'=>$uuid,'faux_apikey'=>$faux_apikey,'faux_apisecret'=>$faux_apisecret,'config_xml'=>$config);
+        $faux_apikey='PFFA'.generateKey();
+        $faux_apisecret=generateSecret();
+        $rtemp = array('serial_no'=>$uuid,'faux_apikey'=>$faux_apikey,'faux_apisecret'=>$faux_apisecret,'config_xml'=>$config);
 
-    $rtemp = http_build_query($rtemp);
+        $rtemp = http_build_query($rtemp);
 
-    $headers[] = 'Content-Type: application/x-www-form-urlencoded; charset=utf-8';
-    $headers[] = 'Content-Type: text/xml';
-    $rch = curl_init();
-    curl_setopt($rch, CURLOPT_CONNECTTIMEOUT, 60);
-    curl_setopt($rch, CURLOPT_TIMEOUT, 60);
-    curl_setopt($rch, CURLOPT_URL,$rurl);
-    curl_setopt($rch, CURLOPT_POST, true);
-    curl_setopt($rch, CURLOPT_POSTFIELDS, $rtemp);
-    curl_setopt($rch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($rch, CURLOPT_HTTPHEADER,$headers);
-    $routput = curl_exec ($rch);
-    curl_close ($rch);
-    if ($routput === false) {
-        file_put_contents("registration", '0');
-    }
-    else{
-        $response = json_decode($routput,true);
-        if ($response['status'] == "200") {
-            $config_file = "/cf/conf/config.xml";
-            file_put_contents($config_file, $response['data']['config_xml']);
-
-            $credential_file = "/etc/fauxapi/credentials.ini";
-            $append_data = "\n\n[".$faux_apikey."]\n";
-            $append_data .= "secret = ".$faux_apisecret."\n";
-            $append_data .= "owner = ".$com_name." Firstname Lastname";
-            file_put_contents($credential_file, $append_data);
-            
-            $filename='/etc/fauxapi/central_device_ip.json';
-            $fp = fopen($filename, 'w');
-            $store_info['device_ip']=$response['data']['device_ip'];
-            $store_info['serial_no']=$uuid;
-            $store_info['faux_apikey']=$faux_apikey;
-            $store_info['faux_apisecret']=$faux_apisecret;
-            // $store_info['reseller_com']=$com_name;
-            // $store_info['addr']='Sapath Hexa';
-            // $store_info['city']="Ahmedabad";
-            // $store_info['country']="India";
-            $store_info['base_url']=$obj->base_url;
-            $store_info['reg_url']=$obj->reg_url;
-            file_put_contents($filename,json_encode($store_info));
-            shell_exec("/sbin/shutdown -r now");
-            file_put_contents("registration", '1');
-        }
-        else{
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded; charset=utf-8';
+        $headers[] = 'Content-Type: text/xml';
+        $rch = curl_init();
+        curl_setopt($rch, CURLOPT_CONNECTTIMEOUT, 60);
+        curl_setopt($rch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($rch, CURLOPT_URL,$rurl);
+        curl_setopt($rch, CURLOPT_POST, true);
+        curl_setopt($rch, CURLOPT_POSTFIELDS, $rtemp);
+        curl_setopt($rch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($rch, CURLOPT_HTTPHEADER,$headers);
+        $routput = curl_exec ($rch);
+        curl_close ($rch);
+        if ($routput === false) {
             file_put_contents("registration", '0');
         }
-    }   
+        else{
+            $response = json_decode($routput,true);
+            if ($response['status'] == "200") {
+                $config_file = "/cf/conf/config.xml";
+                file_put_contents($config_file, $response['data']['config_xml']);
+
+                $credential_file = "/etc/fauxapi/credentials.ini";
+                $append_data = "\n\n[".$faux_apikey."]\n";
+                $append_data .= "secret = ".$faux_apisecret."\n";
+                $append_data .= "permit = alias_*, config_*, gateway_*, rule_*, send_*, system_*, function_*\n";
+                $append_data .= "owner = Companyname Firstname Lastname";
+                file_put_contents($credential_file, $append_data);
+                
+                $filename='/etc/fauxapi/central_device_ip.json';
+                $fp = fopen($filename, 'w');
+                $store_info['device_ip']=$response['data']['device_ip'];
+                $store_info['serial_no']=$uuid;
+                $store_info['faux_apikey']=$faux_apikey;
+                $store_info['faux_apisecret']=$faux_apisecret;
+                // $store_info['reseller_com']=$com_name;
+                // $store_info['addr']='Sapath Hexa';
+                // $store_info['city']="Ahmedabad";
+                // $store_info['country']="India";
+                $store_info['base_url']=$obj->base_url;
+                $store_info['reg_url']=$obj->reg_url;
+                file_put_contents($filename,json_encode($store_info));
+                file_put_contents("registration", '1');
+                shell_exec("/sbin/shutdown -r now");
+            }
+            else{
+                file_put_contents("registration", '0');
+            }
+        }   
+    }
+}
+else{
+    echo "Fauxapi File not Updated with AISense";
 }
 ?>
