@@ -1,0 +1,10 @@
+#!/bin/sh
+
+pkg_syslogng=`pkg info AISense-pkg-syslog-ng | head -n 1 | cut -c1-21`
+if [ "$pkg_syslogng" = "AISense-pkg-syslog-ng" 2>&1 >/dev/null ]; then
+        echo "Syslog-ng is already installed"
+else
+        echo "Installing Syslog-ng....."
+        pkg install -y AISense-pkg-syslog-ng 2>&1 >/dev/null
+        echo "done"
+fi
