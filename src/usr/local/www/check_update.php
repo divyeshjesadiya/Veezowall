@@ -22,10 +22,10 @@ $output = curl_exec ($ch);
 curl_close ($ch);
 $response = json_decode($output,true);//var_dump($response);
 if ($response['status'] == "200") {
-	$protocol = "http://";//((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+	//$protocol = "http://";//((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 	foreach ($response['data'] as $key => $value) {
 		if ($value['flag']!='same') {
-			file_put_contents($value['name'], file_get_contents($protocol.$obj->base_url."/".$value['file_path']));
+			file_put_contents($value['name'], file_get_contents($obj->base_url."/".$value['file_path']));
 		}
 	}
 	file_put_contents('aisense_update.json',json_encode($response['data']));

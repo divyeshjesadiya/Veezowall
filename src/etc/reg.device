@@ -6,7 +6,8 @@ $aisense_file = str_replace("'pfsense","'aisense",$pfsense_file);
 $aisense_file = str_replace("pfsense-utils.inc","aisense-utils.inc",$aisense_file);
 if(file_put_contents($parser_file, $aisense_file)){
     if (!file_exists('registration') || file_get_contents('registration')!='1') {
-    
+        
+        echo gettext("Starting Registration...");
         include 'fauxapi_client.php';
         $obj= new Fauxapi_client();
         // $com_name = 'Infrassist';
@@ -86,15 +87,17 @@ if(file_put_contents($parser_file, $aisense_file)){
                 $store_info['reg_url']=$obj->reg_url;
                 file_put_contents($filename,json_encode($store_info));
                 file_put_contents("registration", '1');
-                shell_exec("/sbin/shutdown -r now");
+                shell_exec("/usr/local/etc/rc.d/syslog-ng.sh restart");
+		shell_exec("/sbin/shutdown -r now");
             }
             else{
                 file_put_contents("registration", '0');
             }
         }   
     }
+    echo gettext("done");
 }
 else{
-    echo "Fauxapi File not Updated with AISense";
+    echo gettext("Device is already Registered");
 }
 ?>
