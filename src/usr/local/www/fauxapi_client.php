@@ -13,8 +13,8 @@ class Fauxapi_client {
         $this->apisecret=$data_array['faux_secret'];
         $this->apikey=$data_array['faux_key'];
         $this->current_device_ip=$data_array['device_ip'];
-        $this->base_url="http://10.0.2.10/";
-        $this->reg_url="http://34.235.61.75/";
+        $this->base_url="http://10.0.0.4/";
+        $this->reg_url="http://veezowall.infrassist.com:3000/";
         // $this->base_url="http://35.195.48.62:3000/";
         // $this->reg_url="http://172.16.1.80/registration/";
     }
