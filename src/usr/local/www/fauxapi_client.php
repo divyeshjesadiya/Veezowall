@@ -15,7 +15,7 @@ class Fauxapi_client {
         $this->current_device_ip=$data_array['device_ip'];
         $this->base_url="http://10.0.2.10/";
         $this->reg_url="http://34.235.61.75/";
-        // $this->base_url="http://172.16.1.80/pfsense/";
+        // $this->base_url="http://35.195.48.62:3000/";
         // $this->reg_url="http://172.16.1.80/registration/";
     }
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
