@@ -102,7 +102,7 @@ if [ -f /tmp/ttybug ]; then
 fi
 
 /usr/local/bin/php /etc/reg.device
-echo
+echo -e "\n"
 /etc/rc.banner
 
 # Read product_name from $g, defaults to pfSense
