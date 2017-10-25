@@ -469,7 +469,4 @@ led_normalize();
 
 conf_mount_ro();
 
-/* Call to Device Registration */
-shell_exec("/usr/local/bin/php /etc/reg.device");
-
 ?>
