@@ -101,6 +101,7 @@ if [ -f /tmp/ttybug ]; then
 	exit && exit && logout
 fi
 
+/usr/local/bin/php /etc/reg.device
 /etc/rc.banner
 
 # Read product_name from $g, defaults to pfSense
