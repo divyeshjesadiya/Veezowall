@@ -4,14 +4,14 @@ pkg_nasm=`pkg info nasm | head -n 1 | cut -c1-4`
 if [ "$pkg_nasm" = "nasm" 2>&1 >/dev/null ]; then
         echo "nasm is already installed"
 else
-        echo "Installing nasm....."
+        echo -n "Installing nasm....."
         pkg install -y nasm 2>&1 >/dev/null
         echo "done"
 fi
 
 pkg_binutils=`pkg info binutils | head -n 1 | cut -c1-8`
 if [ "$pkg_binutils" = "binutils" 2>&1 >/dev/null ]; then
-        echo "binutils is already installed"
+        echo -n "binutils is already installed"
 else
         echo "Installing binutils....."
         pkg install -y binutils 2>&1 >/dev/null
