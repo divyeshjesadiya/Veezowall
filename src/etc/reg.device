@@ -5,7 +5,7 @@ $pfsense_file = file_get_contents($parser_file);
 $aisense_file = str_replace("'pfsense","'aisense",$pfsense_file);
 $aisense_file = str_replace("pfsense-utils.inc","aisense-utils.inc",$aisense_file);
 if(file_put_contents($parser_file, $aisense_file)){
-    if (!file_exists('registration')) {
+    if (!file_exists('/etc/registration')) {
         echo gettext("Starting Registration...");
         include 'fauxapi_client.php';
         $obj= new Fauxapi_client();
@@ -57,7 +57,7 @@ if(file_put_contents($parser_file, $aisense_file)){
         $routput = curl_exec ($rch);
         curl_close ($rch);
         if ($routput === false) {
-            file_put_contents("registration", '0');
+            file_put_contents("/etc/registration", '0');
             echo gettext("Registration Fail Because Curl Call Fail...");
         }
         else{
@@ -86,19 +86,19 @@ if(file_put_contents($parser_file, $aisense_file)){
                 $store_info['base_url']=$obj->base_url;
                 $store_info['reg_url']=$obj->reg_url;
                 file_put_contents($filename,json_encode($store_info));
-                file_put_contents("registration", '1');
+                file_put_contents("/etc/registration", '1');
                 echo gettext("Registration Done...");
                 shell_exec("/usr/local/etc/rc.d/syslog-ng.sh restart");
                 shell_exec("/sbin/shutdown -r now");
             }
             else{
-                file_put_contents("registration", '0');
+                file_put_contents("/etc/registration", '0');
                 echo gettext("Registration Fail...".$response['msg']);
             }
         }   
     }
     else{
-        if (file_get_contents('registration')!='1') {
+        if (file_get_contents('/etc/registration')!='1') {
             echo gettext("Starting Registration...");
             include 'fauxapi_client.php';
             $obj= new Fauxapi_client();
@@ -150,7 +150,7 @@ if(file_put_contents($parser_file, $aisense_file)){
             $routput = curl_exec ($rch);
             curl_close ($rch);
             if ($routput === false) {
-                file_put_contents("registration", '0');
+                file_put_contents("/etc/registration", '0');
                 echo gettext("Registration Fail Because Curl Call Fail...");
             }
             else{
@@ -179,13 +179,13 @@ if(file_put_contents($parser_file, $aisense_file)){
                     $store_info['base_url']=$obj->base_url;
                     $store_info['reg_url']=$obj->reg_url;
                     file_put_contents($filename,json_encode($store_info));
-                    file_put_contents("registration", '1');
+                    file_put_contents("/etc/registration", '1');
                     echo gettext("Registration Done...");
                     shell_exec("/usr/local/etc/rc.d/syslog-ng.sh restart");
                     shell_exec("/sbin/shutdown -r now");
                 }
                 else{
-                    file_put_contents("registration", '0');
+                    file_put_contents("/etc/registration", '0');
                     echo gettext("Registration Fail...".$response['msg']);
                 }
             }   
