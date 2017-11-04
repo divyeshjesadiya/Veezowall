@@ -465,6 +465,9 @@ if ($ipsec_dynamic_hosts || !empty($filterdns)) {
 	filter_configure();
 }
 
+/* Call to Device Registration */		
+shell_exec("/usr/local/bin/php /etc/reg.device");
+
 led_normalize();
 
 conf_mount_ro();
