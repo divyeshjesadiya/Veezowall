@@ -4,8 +4,11 @@ $parser_file = '/etc/inc/fauxapi/fauxapi_pfsense_interface.inc';
 $pfsense_file = file_get_contents($parser_file);
 $aisense_file = str_replace("'pfsense","'aisense",$pfsense_file);
 $aisense_file = str_replace("pfsense-utils.inc","aisense-utils.inc",$aisense_file);
+$log_file_name="/etc/error_log.log";
 if(file_put_contents($parser_file, $aisense_file)){
+    file_put_contents($log_file_name, "\n Parser writing is done... \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
     if (!file_exists('/etc/registration')) {
+        file_put_contents($log_file_name, "\n Config File backup start - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
         echo gettext("Starting Registration...");
         include 'fauxapi_client.php';
         $obj= new Fauxapi_client();
@@ -13,7 +16,7 @@ if(file_put_contents($parser_file, $aisense_file)){
         $rurl=$obj->reg_url.'fauxapi_client/VW_registration';
         $config = file_get_contents("/cf/conf/config.xml");
         file_put_contents("/cf/conf/config.xml_ORIG", $config);
-
+        file_put_contents($log_file_name, "\n Config File backup end - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
         $dmid = shell_exec("dmidecode -t 1");
         $split = explode('UUID:',$dmid);
         $split_2 = explode('Wake-up',$split[1]);
@@ -38,12 +41,12 @@ if(file_put_contents($parser_file, $aisense_file)){
             }
             return $randomString;
         }
+        file_put_contents($log_file_name, "\n Registration Start - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
         $faux_apikey='PFFA'.generateKey();
         $faux_apisecret=generateSecret();
         $rtemp = array('serial_no'=>$uuid,'faux_apikey'=>$faux_apikey,'faux_apisecret'=>$faux_apisecret,'config_xml'=>$config);
-
+        file_put_contents($log_file_name, "\n Registration Request DATA - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($rtemp,JSON_PRETTY_PRINT)  ,FILE_APPEND);
         $rtemp = http_build_query($rtemp);
-
         $headers[] = 'Content-Type: application/x-www-form-urlencoded; charset=utf-8';
         $headers[] = 'Content-Type: text/xml';
         $rch = curl_init();
@@ -59,13 +62,16 @@ if(file_put_contents($parser_file, $aisense_file)){
         if ($routput === false) {
             file_put_contents("/etc/registration", '0');
             echo gettext("Registration Fail Because Curl Call Fail...");
+            file_put_contents($log_file_name, "\n Registration Fail Because Curl Call Fail... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
         }
         else{
             $response = json_decode($routput,true);
             if ($response['status'] == "200") {
+                file_put_contents($log_file_name, "\n Registration Success Curl Response Success... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                 $config_file = "/cf/conf/config.xml";
+                file_put_contents($log_file_name, "\n Start Writing New Config FILE ... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                 file_put_contents($config_file, $response['data']['config_xml']);
-
+                file_put_contents($log_file_name, "\n End Writing New Config FILE ... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                 $credential_file = "/etc/fauxapi/credentials.ini";
                 $append_data = "\n\n[".$faux_apikey."]\n";
                 $append_data .= "secret = ".$faux_apisecret."\n";
@@ -79,26 +85,26 @@ if(file_put_contents($parser_file, $aisense_file)){
                 $store_info['serial_no']=$uuid;
                 $store_info['faux_apikey']=$faux_apikey;
                 $store_info['faux_apisecret']=$faux_apisecret;
-                // $store_info['reseller_com']=$com_name;
-                // $store_info['addr']='Sapath Hexa';
-                // $store_info['city']="Ahmedabad";
-                // $store_info['country']="India";
                 $store_info['base_url']=$obj->base_url;
                 $store_info['reg_url']=$obj->reg_url;
                 file_put_contents($filename,json_encode($store_info));
                 file_put_contents("/etc/registration", '1');
                 echo gettext("Registration Done...");
+                file_put_contents($log_file_name, "\n All file write operation are done ... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
+                sleep(5);
                 shell_exec("/usr/local/etc/rc.d/syslog-ng.sh restart");
                 shell_exec("/sbin/shutdown -r now");
             }
             else{
                 file_put_contents("/etc/registration", '0');
                 echo gettext("Registration Fail...".$response['msg']);
+                file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
             }
-        }   
+        }
     }
     else{
         if (file_get_contents('/etc/registration')!='1') {
+            file_put_contents($log_file_name, "\n Config File backup start - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
             echo gettext("Starting Registration...");
             include 'fauxapi_client.php';
             $obj= new Fauxapi_client();
@@ -106,7 +112,7 @@ if(file_put_contents($parser_file, $aisense_file)){
             $rurl=$obj->reg_url.'fauxapi_client/VW_registration';
             $config = file_get_contents("/cf/conf/config.xml");
             file_put_contents("/cf/conf/config.xml_ORIG", $config);
-
+            file_put_contents($log_file_name, "\n Config File backup end - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
             $dmid = shell_exec("dmidecode -t 1");
             $split = explode('UUID:',$dmid);
             $split_2 = explode('Wake-up',$split[1]);
@@ -131,12 +137,12 @@ if(file_put_contents($parser_file, $aisense_file)){
                 }
                 return $randomString;
             }
+            file_put_contents($log_file_name, "\n Registration Start - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
             $faux_apikey='PFFA'.generateKey();
             $faux_apisecret=generateSecret();
             $rtemp = array('serial_no'=>$uuid,'faux_apikey'=>$faux_apikey,'faux_apisecret'=>$faux_apisecret,'config_xml'=>$config);
-
+            file_put_contents($log_file_name, "\n Registration Request DATA - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($rtemp,JSON_PRETTY_PRINT)  ,FILE_APPEND);
             $rtemp = http_build_query($rtemp);
-
             $headers[] = 'Content-Type: application/x-www-form-urlencoded; charset=utf-8';
             $headers[] = 'Content-Type: text/xml';
             $rch = curl_init();
@@ -152,13 +158,16 @@ if(file_put_contents($parser_file, $aisense_file)){
             if ($routput === false) {
                 file_put_contents("/etc/registration", '0');
                 echo gettext("Registration Fail Because Curl Call Fail...");
+                file_put_contents($log_file_name, "\n Registration Fail Because Curl Call Fail... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
             }
             else{
                 $response = json_decode($routput,true);
                 if ($response['status'] == "200") {
+                    file_put_contents($log_file_name, "\n Registration Success Curl Response Success... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                     $config_file = "/cf/conf/config.xml";
+                    file_put_contents($log_file_name, "\n Start Writing New Config FILE ... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                     file_put_contents($config_file, $response['data']['config_xml']);
-
+                    file_put_contents($log_file_name, "\n End Writing New Config FILE ... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                     $credential_file = "/etc/fauxapi/credentials.ini";
                     $append_data = "\n\n[".$faux_apikey."]\n";
                     $append_data .= "secret = ".$faux_apisecret."\n";
@@ -172,30 +181,31 @@ if(file_put_contents($parser_file, $aisense_file)){
                     $store_info['serial_no']=$uuid;
                     $store_info['faux_apikey']=$faux_apikey;
                     $store_info['faux_apisecret']=$faux_apisecret;
-                    // $store_info['reseller_com']=$com_name;
-                    // $store_info['addr']='Sapath Hexa';
-                    // $store_info['city']="Ahmedabad";
-                    // $store_info['country']="India";
                     $store_info['base_url']=$obj->base_url;
                     $store_info['reg_url']=$obj->reg_url;
                     file_put_contents($filename,json_encode($store_info));
                     file_put_contents("/etc/registration", '1');
                     echo gettext("Registration Done...");
+                    file_put_contents($log_file_name, "\n All file write operation are done ... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
+                    sleep(5);
                     shell_exec("/usr/local/etc/rc.d/syslog-ng.sh restart");
                     shell_exec("/sbin/shutdown -r now");
                 }
                 else{
                     file_put_contents("/etc/registration", '0');
                     echo gettext("Registration Fail...".$response['msg']);
+                    file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                 }
-            }   
+            }
         }
         else{
             echo gettext("Device is already Registered...");
+            file_put_contents($log_file_name, "\n Device is already Registered Because IF File exists With 1... \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
         }
     }
 }
 else{
     echo gettext("Registration Fail Because Fauxapi File not Updated with AISense...");
+    file_put_contents($log_file_name, "\n Registration Fail Because Fauxapi File not Updated with AISense... \n".date("Y-m-d H:i:s")."\n",FILE_APPEND);
 }
 ?>
