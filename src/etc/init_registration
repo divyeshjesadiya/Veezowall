@@ -1,9 +1,0 @@
-#!/bin/sh
-
-REG_FILE="/etc/registration"
-
-if [ ! -f $REG_FILE ]; then
-	/sbin/reboot
-else
-
-fi

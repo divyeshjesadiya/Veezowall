@@ -61,13 +61,14 @@ if(file_put_contents($parser_file, $aisense_file)){
         curl_close ($rch);
         if ($routput === false) {
             file_put_contents("/etc/registration", '0');
-            echo gettext("Registration Fail Because Curl Call Fail...");
-            file_put_contents($log_file_name, "\n Registration Fail Because Curl Call Fail... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+            echo gettext("Registration failed because Curl call failed...");
+            file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+	    shell_exec("/sbin/shutdown -r now");
         }
         else{
             $response = json_decode($routput,true);
             if ($response['status'] == "200") {
-                file_put_contents($log_file_name, "\n Registration Success Curl Response Success... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                file_put_contents($log_file_name, "\n Registration successful Curl response success... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                 $config_file = "/cf/conf/config.xml";
                 file_put_contents($log_file_name, "\n Start Writing New Config FILE ... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                 file_put_contents($config_file, $response['data']['config_xml']);
@@ -90,15 +91,16 @@ if(file_put_contents($parser_file, $aisense_file)){
                 file_put_contents($filename,json_encode($store_info));
                 file_put_contents("/etc/registration", '1');
                 echo gettext("Registration Done...");
-                file_put_contents($log_file_name, "\n All file write operation are done ... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
+                file_put_contents($log_file_name, "\n All file write operations are done ... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                 sleep(5);
                 shell_exec("/usr/local/etc/rc.d/syslog-ng.sh restart");
                 shell_exec("/sbin/shutdown -r now");
             }
             else{
                 file_put_contents("/etc/registration", '0');
-                echo gettext("Registration Fail...".$response['msg']);
-                file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                echo gettext("Registration Failed...".$response['msg']);
+                file_put_contents($log_file_name, "\n Registration Failed because ...".$response['msg']." - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                shell_exec("/sbin/shutdown -r now");
             }
         }
     }
@@ -157,13 +159,14 @@ if(file_put_contents($parser_file, $aisense_file)){
             curl_close ($rch);
             if ($routput === false) {
                 file_put_contents("/etc/registration", '0');
-                echo gettext("Registration Fail Because Curl Call Fail...");
-                file_put_contents($log_file_name, "\n Registration Fail Because Curl Call Fail... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                echo gettext("Registration failed because Curl call failed...");
+                file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                shell_exec("/sbin/shutdown -r now");
             }
             else{
                 $response = json_decode($routput,true);
                 if ($response['status'] == "200") {
-                    file_put_contents($log_file_name, "\n Registration Success Curl Response Success... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                    file_put_contents($log_file_name, "\n Registration Successful Curl Response Success... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                     $config_file = "/cf/conf/config.xml";
                     file_put_contents($log_file_name, "\n Start Writing New Config FILE ... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
                     file_put_contents($config_file, $response['data']['config_xml']);
@@ -193,8 +196,9 @@ if(file_put_contents($parser_file, $aisense_file)){
                 }
                 else{
                     file_put_contents("/etc/registration", '0');
-                    echo gettext("Registration Fail...".$response['msg']);
-                    file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                    echo gettext("Registration Failed...".$response['msg']);
+                    file_put_contents($log_file_name, "\n Registration Failed Because ...".$response['msg']." - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                    shell_exec("/sbin/shutdown -r now");
                 }
             }
         }
@@ -207,5 +211,6 @@ if(file_put_contents($parser_file, $aisense_file)){
 else{
     echo gettext("Registration Fail Because Fauxapi File not Updated with AISense...");
     file_put_contents($log_file_name, "\n Registration Fail Because Fauxapi File not Updated with AISense... \n".date("Y-m-d H:i:s")."\n",FILE_APPEND);
+    shell_exec("/sbin/shutdown -r now");
 }
 ?>
