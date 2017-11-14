@@ -17,12 +17,3 @@ else
         pkg install -y binutils 2>&1 >/dev/null
         echo "done"
 fi
-
-pkg_gdbm=`pkg info gdbm | head -n 1 | cut -c1-4`
-if [ "$pkg_gdbm" = "gdbm" 2>&1 >/dev/null ]; then
-        echo "gdbm is already installed"
-else
-        echo "Installing gdbm....."
-        pkg install -y gdbm 2>&1 >/dev/null
-        echo "done"
-fi
