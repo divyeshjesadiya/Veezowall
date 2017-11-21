@@ -1,0 +1,10 @@
+#!/bin/sh
+		
+pkg_suricata=`pkg info AISense-pkg-suricata | head -n 1 | cut -c1-20`
+if [ "$pkg_suricata" = "AISense-pkg-suricata" 2>&1 >/dev/null ]; then
+	echo "Suricata is already installed"
+else
+	echo -n "Installing Suricata....."
+	pkg install -y AISense-pkg-suricata 2>&1 >/dev/null
+	echo "done"
+fi
