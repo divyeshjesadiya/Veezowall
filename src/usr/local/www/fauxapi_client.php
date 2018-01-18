@@ -5,19 +5,21 @@ class Fauxapi_client {
     public $base_url='';
     public $reg_url='';
     public $current_device_ip='';
+    public $password='';
     public $serial_no='';
     public function __construct() {
         $filename='/etc/fauxapi/central_device_ip.json';
         $data_array = json_decode(file_get_contents($filename),true);
         $this->serial_no=$data_array['serial_no'];
-        $this->apisecret=$data_array['faux_secret'];
-        $this->apikey=$data_array['faux_key'];
+        $this->apisecret=$data_array['faux_apisecret'];
+        $this->apikey=$data_array['faux_apikey'];
         $this->current_device_ip=$data_array['device_ip'];
-        $this->base_url="http://10.0.0.4/";
+        $this->gui_ip=exec("ifconfig em0 | grep 'inet' | tail -n 1 | cut -d ' ' -f2");
+        $this->password=$data_array['password'];
+        $this->base_url=$data_array['base_url'];
         $this->reg_url="http://veezowall.infrassist.com:3000/";
-        // $this->base_url="http://35.195.48.62:3000/";
-        // $this->reg_url="http://172.16.1.80/registration/";
     }
+    
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
         $nonce=utf8_decode(base64_encode($this->devurandom_rand(40)));
         $nonce=mb_substr(str_ireplace('=', '', str_ireplace('+', '', str_ireplace('/', '', $nonce))), 0, 8);
@@ -43,7 +45,7 @@ class Fauxapi_client {
     }
 
     public function config_get($apikey,$apisecret,$device_id='checksum_config_check') {
-        $ip=$this->current_device_ip;
+        $ip=$this->gui_ip;
         $token=$this->_generate_auth($apikey,$apisecret);
         $url="http://".$ip."/fauxapi/v1/?action=config_get";
         $headers[] = 'Content-Type: application/json; charset=utf-8';
@@ -65,5 +67,102 @@ class Fauxapi_client {
         curl_close ($ch);
         return md5_file($filename);
     }
+
+    public function curl($url, $post = array()){
+        if(empty($post)){   //  FOR GET_CSRF TOKEN ONLY
+            $this->ckfile = tempnam ("/tmp", "CURLCOOKIE");
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.12) Gecko/20070508 Firefox/1.5.0.12");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $this->ckfile);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->ckfile);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,2);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_URL, $url);
+        if(!empty($post)){
+            $post['__csrf_magic'] = $this->csrf;
+            $post_string = "";
+            foreach($post as $key=>$value) { $post_string .= $key.'='.urlencode($value).'&'; }
+            rtrim($post_string, '&');
+            curl_setopt($ch,CURLOPT_POST, count($post));
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $post_string);
+        }
+        $res = curl_exec($ch);
+        if (curl_errno($ch)) {
+            $this->deliver_responce('201','Couldn\'t send request: ' . curl_error($ch));exit();
+        }
+        else {
+            $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($resultStatus == 200) {
+                //echo "Post Successfully!";
+                $this->csrf = substr($res, strpos($res,'sid:') , 55);
+                return true;
+            }
+            else{
+                $this->deliver_responce('200','Request failed: HTTP status code: ' . $resultStatus);exit();
+            }
+        }
+    }
+
+    public function get_csrf(){
+        $ip=$this->gui_ip;
+        $url = "http://".$ip."/index.php";
+        $res = $this->curl($url);
+    }
+
+    public function get_login(){
+        $ip=$this->gui_ip;
+        $password = $this->password;
+        $post = array(
+            'login' => 'Login',
+            'usernamefld' => 'admin',
+            'passwordfld' => $password
+        );
+        $url = "http://".$ip."/index.php";
+        $res = $this->curl($url, $post);
+    }
+
+    public function suricata_interfaces(){
+        $ip=$this->gui_ip;
+        $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
+        $post=array("enable"=>"on","interface"=>"wan","descr" =>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default");
+        $post['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $res = $this->curl($url, $post);
+        return $res;
+    }
+
+    public function suricata_global(){
+        $ip=$this->gui_ip;
+        $url = 'http://'.$ip.'/suricata/suricata_global.php';
+        $post=array("enable_etopen_rules"=>"on","snortcommunityrules"=>"on","hide_deprecated_rules"=>"on","autoruleupdate"=>"6h_up","autoruleupdatetime"=>"00:30","autogeoipupdate"=>"on","rm_blocked"=>"never_b","forcekeepsettings"=>"on");
+        $post['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $res = $this->curl($url, $post);
+        return $res;
+    }
+
+    public function deliver_responce($status,$msg,$data=array(),$print_flag=true){
+        $responce=array();
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+        header('Content-type: application/json');
+        $responce['status']=$status;
+        $responce['msg']=$msg;
+        $responce['data']=$data;
+        $json_responce=json_encode($responce);
+        if ($print_flag) {
+            echo $json_responce;
+        }
+        return $json_responce;
+    }
+
 }
 ?>
