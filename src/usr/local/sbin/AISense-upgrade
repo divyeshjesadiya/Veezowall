@@ -326,7 +326,8 @@ pkg_upgrade() {
 			rm -f /tmp/${product}.conf.copy
 		fi
 
-		if [ $(pkg upgrade -nq | wc -l) -le 1 ]; then
+		#if [ $(pkg upgrade -nq | wc -l) -le 1 ]; then
+		if [ "$(pkg upgrade -n | tail -n 1)" = "Your packages are up to date." ]; then
 			_echo "Your packages are up to date"
 			_exit 0
 		fi
