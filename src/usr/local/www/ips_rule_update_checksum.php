@@ -83,10 +83,12 @@ if (file_exists($suricata_checksum)) {
 				}
 			}
 			else{
+				shell_exec("/usr/local/bin/php-cgi -f /usr/local/pkg/suricata/suricata_check_for_rule_updates.php &");
 				echo "Community rule has not available.";
 			}
 		}
 		else{
+			shell_exec("/usr/local/bin/php-cgi -f /usr/local/pkg/suricata/suricata_check_for_rule_updates.php &");
 			echo "Emerging rule has not available.";
 		}
 	}
