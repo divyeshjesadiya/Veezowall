@@ -1,0 +1,10 @@
+#!/bin/sh
+		
+pkg_base=`pkg info AISense-base | head -n 1 | cut -c1-12`
+if [ "$pkg_base" = "AISense-base" 2>&1 >/dev/null ]; then
+	echo "AISense Base package is already installed"
+else
+	echo -n "Installing AISense Base package....."
+	pkg install -y AISense-base 2>&1 >/dev/null
+	echo "done"
+fi
