@@ -17,7 +17,7 @@ class Fauxapi_client {
         $this->gui_ip=exec("ifconfig em0 | grep 'inet' | tail -n 1 | cut -d ' ' -f2");
         $this->password=$data_array['password'];
         $this->base_url=$data_array['base_url'];
-        $this->reg_url="http://veezowall.infrassist.com:3000/";
+        $this->reg_url="http://veezowall.veezo.org:3000/";
     }
     
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
