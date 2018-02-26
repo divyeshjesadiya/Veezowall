@@ -17,7 +17,7 @@ class Fauxapi_client {
         $this->gui_ip=exec("ifconfig em0 | grep 'inet' | tail -n 1 | cut -d ' ' -f2");
         $this->password=$data_array['password'];
         $this->base_url=$data_array['base_url'];
-        $this->reg_url="http://veezowall.veezo.org:3000/";
+        $this->reg_url="http://veezowall.infrassist.com:3000/";
     }
     
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
@@ -129,7 +129,7 @@ class Fauxapi_client {
     public function suricata_interfaces(){
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
-        $post=array("enable"=>"on","interface"=>"wan","descr" =>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default");
+        $post=array("enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"info");
         $post['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
