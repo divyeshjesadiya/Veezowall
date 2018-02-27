@@ -134,7 +134,20 @@ class Fauxapi_client {
         $this->get_csrf();
         $this->get_login();
         $res = $this->curl($url, $post);
-        return $res;
+        $syslog_settings_ret = $this->syslog_settings();
+        return $syslog_settings_ret;
+    }
+
+    public function syslog_settings(){
+        $vip=$this->gui_ip;
+        $vurl = 'http://'.$vip.'/status_logs_settings.php';
+        $vpost=array("nentries"=>"50","logdefaultblock"=>"yes","logbogons"=>"yes","logprivatenets"=>"yes","lognginx"=>"yes","enable"=>"yes","enable"=>"yes","remoteserver"=>"10.0.4.5:514","system"=>"yes");
+        $vpost['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $vres = $this->curl($vurl, $vpost);
+        sleep(120);
+        return $vres;
     }
 
     public function suricata_global(){
