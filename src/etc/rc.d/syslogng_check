@@ -1,5 +1,11 @@
 #!/bin/sh
 
+pkg info pkg | head -n 1 | grep "pkg: warning: database version 34 is newer than libpkg ( 3 ) version 33" 2>&1 >/dev/null
+if [ $? == 0 ]; then
+        pkg shell "CREATE VIRTUAL TABLE pkg_search USING fts4 (id, name, origin);"
+        pkg shell "pragma user_version = 33 ;"
+fi
+
 pkg_syslogng=`pkg info AISense-pkg-syslog-ng | head -n 1 | cut -c1-21`
 if [ "$pkg_syslogng" = "AISense-pkg-syslog-ng" 2>&1 >/dev/null ]; then
         echo "Syslog-ng is already installed"
