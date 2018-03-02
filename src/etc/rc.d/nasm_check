@@ -1,11 +1,5 @@
 #!/bin/sh
 
-pkg info pkg | head -n 1 | grep "pkg: warning: database version 34 is newer than libpkg ( 3 ) version 33" 2>&1 >/dev/null
-if [ $? == 0 ]; then
-        pkg shell "CREATE VIRTUAL TABLE pkg_search USING fts4 (id, name, origin);"
-        pkg shell "pragma user_version = 33 ;"
-fi
-
 pkg_nasm=`pkg info nasm | head -n 1 | cut -c1-4`
 if [ "$pkg_nasm" = "nasm" 2>&1 >/dev/null ]; then
         echo "nasm is already installed"
