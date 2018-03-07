@@ -16,10 +16,10 @@ if(file_put_contents($parser_file, $aisense_file)){
         $config = file_get_contents("/cf/conf/config.xml");
         file_put_contents("/cf/conf/config.xml_ORIG", $config);
         file_put_contents($log_file_name, "\n Config File backup end - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
-        $dmid = shell_exec("dmidecode -t 1");
-        $split = explode('UUID:',$dmid);
-        $split_2 = explode('Wake-up',$split[1]);
-        $uuid = trim(str_replace(' ', '', $split_2[0]));
+
+        include_once '/etc/inc/system.inc';
+        include_once '/etc/inc/util.inc';
+        $uuid = system_get_serial();
 
         function generateKey($length = 12) {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -113,10 +113,10 @@ if(file_put_contents($parser_file, $aisense_file)){
             $config = file_get_contents("/cf/conf/config.xml");
             file_put_contents("/cf/conf/config.xml_ORIG", $config);
             file_put_contents($log_file_name, "\n Config File backup end - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
-            $dmid = shell_exec("dmidecode -t 1");
-            $split = explode('UUID:',$dmid);
-            $split_2 = explode('Wake-up',$split[1]);
-            $uuid = trim(str_replace(' ', '', $split_2[0]));
+
+            include_once '/etc/inc/system.inc';
+            include_once '/etc/inc/util.inc';
+            $uuid = system_get_serial();
 
             function generateKey($length = 12) {
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
