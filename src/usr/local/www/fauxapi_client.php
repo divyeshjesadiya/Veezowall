@@ -17,9 +17,9 @@ class Fauxapi_client {
         $this->gui_ip=exec("ifconfig em0 | grep 'inet' | tail -n 1 | cut -d ' ' -f2");
         $this->password=$data_array['password'];
         $this->base_url=$data_array['base_url'];
-        $this->reg_url="http://veezowall.infrassist.com:3000/";
+        $this->reg_url="http://veezowall.veezo.org:3000/";
     }
-    
+   
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
         $nonce=utf8_decode(base64_encode($this->devurandom_rand(40)));
         $nonce=mb_substr(str_ireplace('=', '', str_ireplace('+', '', str_ireplace('/', '', $nonce))), 0, 8);
@@ -28,7 +28,7 @@ class Fauxapi_client {
         $token = $apikey.":".$timestamp.":".$nonce.":".$hash;
         return $token;
     }
-
+ 
     public function devurandom_rand($min = 0, $max = 0x7FFFFFFF) {
         $diff = $max - $min;
         if ($diff < 0 || $diff > 0x7FFFFFFF) {
@@ -43,18 +43,18 @@ class Fauxapi_client {
         $fp = (float) $val / 2147483647.0; // convert to [0,1]
         return round($fp * $diff) + $min;
     }
-
+ 
     public function config_get($apikey,$apisecret,$device_id='checksum_config_check') {
         $ip=$this->gui_ip;
         $token=$this->_generate_auth($apikey,$apisecret);
         $url="http://".$ip."/fauxapi/v1/?action=config_get";
         $headers[] = 'Content-Type: application/json; charset=utf-8';
         $headers[] = 'fauxapi-auth: '.$token;
-        $ch = curl_init();    
+        $ch = curl_init();   
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER,$headers); 
+        curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         $output = curl_exec ($ch);
@@ -67,7 +67,7 @@ class Fauxapi_client {
         curl_close ($ch);
         return md5_file($filename);
     }
-
+ 
     public function curl($url, $post = array()){
         if(empty($post)){   //  FOR GET_CSRF TOKEN ONLY
             $this->ckfile = tempnam ("/tmp", "CURLCOOKIE");
@@ -107,13 +107,13 @@ class Fauxapi_client {
             }
         }
     }
-
+ 
     public function get_csrf(){
         $ip=$this->gui_ip;
         $url = "http://".$ip."/index.php";
         $res = $this->curl($url);
     }
-
+ 
     public function get_login(){
         $ip=$this->gui_ip;
         $password = $this->password;
@@ -125,11 +125,11 @@ class Fauxapi_client {
         $url = "http://".$ip."/index.php";
         $res = $this->curl($url, $post);
     }
-
+ 
     public function suricata_interfaces(){
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
-        $post=array("enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"info");
+        $post=array("enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"info","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","eve_log_http"=>"on");
         $post['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
@@ -137,11 +137,11 @@ class Fauxapi_client {
         $syslog_settings_ret = $this->syslog_settings();
         return $syslog_settings_ret;
     }
-
+ 
     public function syslog_settings(){
         $vip=$this->gui_ip;
         $vurl = 'http://'.$vip.'/status_logs_settings.php';
-        $vpost=array("nentries"=>"50","logdefaultblock"=>"yes","logbogons"=>"yes","logprivatenets"=>"yes","lognginx"=>"yes","enable"=>"yes","enable"=>"yes","remoteserver"=>"10.0.4.5:514","system"=>"yes");
+        $vpost=array("nentries"=>"50","logdefaultblock"=>"yes","logbogons"=>"yes","logprivatenets"=>"yes","lognginx"=>"yes","enable"=>"yes","enable"=>"yes","remoteserver"=>"10.0.4.5:514","logall"=>"yes");
         $vpost['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
@@ -149,7 +149,6 @@ class Fauxapi_client {
         sleep(120);
         return $vres;
     }
-
     public function suricata_global(){
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_global.php';
@@ -160,7 +159,7 @@ class Fauxapi_client {
         $res = $this->curl($url, $post);
         return $res;
     }
-
+ 
     public function deliver_responce($status,$msg,$data=array(),$print_flag=true){
         $responce=array();
         header('Access-Control-Allow-Origin: *');
@@ -176,6 +175,6 @@ class Fauxapi_client {
         }
         return $json_responce;
     }
-
+ 
 }
 ?>
