@@ -58,6 +58,7 @@ if(file_put_contents($parser_file, $aisense_file)){
         curl_setopt($rch, CURLOPT_HTTPHEADER,$headers);
         $routput = curl_exec ($rch);
         curl_close ($rch);
+        file_put_contents($log_file_name, "\n ************* \t ".date("Y-m-d H:i:s")." \n".$routput ,FILE_APPEND);
         if ($routput === false) {
             file_put_contents("/etc/registration", '0');
             echo gettext("Registration failed because Curl call failed...");
@@ -156,10 +157,12 @@ if(file_put_contents($parser_file, $aisense_file)){
             curl_setopt($rch, CURLOPT_HTTPHEADER,$headers);
             $routput = curl_exec ($rch);
             curl_close ($rch);
+            file_put_contents($log_file_name, "\n ************* \t ".date("Y-m-d H:i:s")." \n".$routput ,FILE_APPEND);
             if ($routput === false) {
                 file_put_contents("/etc/registration", '0');
                 echo gettext("Registration failed because Curl call failed...");
                 file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                file_put_contents($log_file_name, "\n ************* \t ".date("Y-m-d H:i:s")." \n".$routput ,FILE_APPEND);
             }
             else{
                 $response = json_decode($routput,true);

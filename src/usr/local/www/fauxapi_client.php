@@ -129,7 +129,7 @@ class Fauxapi_client {
     public function suricata_interfaces(){
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
-        $post=array("enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"info");
+        $post=array("eve_log_alerts_payload"=>"on","eve_log_http"=>"on","eve_log_dns"=>"on","eve_log_tls"=>"on","eve_log_files"=>"on","eve_log_ssh"=>"on","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"notice");
         $post['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
@@ -141,7 +141,7 @@ class Fauxapi_client {
     public function syslog_settings(){
         $vip=$this->gui_ip;
         $vurl = 'http://'.$vip.'/status_logs_settings.php';
-        $vpost=array("nentries"=>"50","logdefaultblock"=>"yes","logbogons"=>"yes","logprivatenets"=>"yes","lognginx"=>"yes","enable"=>"yes","enable"=>"yes","remoteserver"=>"10.0.4.5:514","system"=>"yes");
+        $vpost=array("nentries"=>"50","logdefaultblock"=>"yes","logbogons"=>"yes","logprivatenets"=>"yes","lognginx"=>"yes","enable"=>"yes","enable"=>"yes","remoteserver"=>"10.0.4.5:514","logall"=>"yes");
         $vpost['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
