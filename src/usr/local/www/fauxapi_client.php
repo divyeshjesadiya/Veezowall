@@ -135,7 +135,18 @@ class Fauxapi_client {
         $this->get_login();
         $res = $this->curl($url, $post);
         $syslog_settings_ret = $this->syslog_settings();
+        $suricata_rulesets_ret = $this->suricata_rulesets();
         return $syslog_settings_ret;
+    }
+    public function suricata_rulesets(){
+        $ip=$this->gui_ip;
+        $url = 'http://'.$ip.'/suricata/suricata_rulesets.php?id=0';
+        $post=array("id"=>0,"toenable"=>array('GPLv2_community.rules','emerging-activex.rules','emerging-attack_response.rules','emerging-botcc.portgrouped.rules','emerging-botcc.rules','emerging-chat.rules','emerging-ciarmy.rules','emerging-compromised.rules','emerging-current_events.rules','emerging-deleted.rules','emerging-dns.rules','emerging-dos.rules','emerging-drop.rules','emerging-dshield.rules','emerging-exploit.rules','emerging-ftp.rules','emerging-games.rules','emerging-icmp.rules','emerging-icmp_info.rules','emerging-imap.rules','emerging-inappropriate.rules','emerging-info.rules','emerging-malware.rules','emerging-misc.rules','emerging-mobile_malware.rules','emerging-netbios.rules','emerging-p2p.rules','emerging-policy.rules','emerging-pop3.rules','emerging-rpc.rules','emerging-scada.rules','emerging-scan.rules','emerging-shellcode.rules','emerging-smtp.rules','emerging-snmp.rules','emerging-sql.rules','emerging-telnet.rules','emerging-tftp.rules','emerging-tor.rules','emerging-trojan.rules','emerging-user_agents.rules','emerging-voip.rules','emerging-web_client.rules','emerging-web_server.rules','emerging-web_specific_apps.rules','emerging-worm.rules'));
+        $post['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $res = $this->curl($url, $post);
+        return $res;
     }
 
     public function syslog_settings(){
@@ -177,5 +188,6 @@ class Fauxapi_client {
         return $json_responce;
     }
 
+    
 }
 ?>
