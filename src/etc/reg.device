@@ -63,6 +63,7 @@ if(file_put_contents($parser_file, $aisense_file)){
             file_put_contents("/etc/registration", '0');
             echo gettext("Registration failed because Curl call failed...");
             file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+            shell_exec("/sbin/shutdown -r now");
         }
         else{
             $response = json_decode($routput,true);
@@ -101,6 +102,7 @@ if(file_put_contents($parser_file, $aisense_file)){
                 file_put_contents("/etc/registration", '0');
                 echo gettext("Registration Failed...".$response['msg']);
                 file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                shell_exec("/sbin/shutdown -r now");
             }
         }
     }
@@ -163,6 +165,7 @@ if(file_put_contents($parser_file, $aisense_file)){
                 echo gettext("Registration failed because Curl call failed...");
                 file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                 file_put_contents($log_file_name, "\n ************* \t ".date("Y-m-d H:i:s")." \n".$routput ,FILE_APPEND);
+                shell_exec("/sbin/shutdown -r now");
             }
             else{
                 $response = json_decode($routput,true);
@@ -201,12 +204,14 @@ if(file_put_contents($parser_file, $aisense_file)){
                     file_put_contents("/etc/registration", '0');
                     echo gettext("Registration Failed...".$response['msg']);
                     file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
+                    shell_exec("/sbin/shutdown -r now");
                 }
             }
         }
         else{
             echo gettext("Device is already Registered...");
             file_put_contents($log_file_name, "\n Device is already Registered Because IF File exists With 1... \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
+            shell_exec("/sbin/shutdown -r now");
         }
     }
 }
