@@ -211,7 +211,6 @@ if(file_put_contents($parser_file, $aisense_file)){
         else{
             echo gettext("Device is already Registered...");
             file_put_contents($log_file_name, "\n Device is already Registered Because IF File exists With 1... \t ".date("Y-m-d H:i:s")." \n",FILE_APPEND);
-            shell_exec("/sbin/shutdown -r now");
         }
     }
 }
