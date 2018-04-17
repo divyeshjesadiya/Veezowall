@@ -89,7 +89,7 @@ class Fauxapi_client {
             foreach($post as $key=>$value) { $post_string .= $key.'='.urlencode($value).'&'; }
             rtrim($post_string, '&');
             curl_setopt($ch,CURLOPT_POST, count($post));
-            curl_setopt($ch,CURLOPT_POSTFIELDS, $post_string);
+            curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($post));
         }
         $res = curl_exec($ch);
         if (curl_errno($ch)) {
@@ -134,10 +134,11 @@ class Fauxapi_client {
         $this->get_csrf();
         $this->get_login();
         $res = $this->curl($url, $post);
-        $syslog_settings_ret = $this->syslog_settings();
         $suricata_rulesets_ret = $this->suricata_rulesets();
+        $syslog_settings_ret = $this->syslog_settings();
         return $syslog_settings_ret;
     }
+
     public function suricata_rulesets(){
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_rulesets.php?id=0';
@@ -187,7 +188,6 @@ class Fauxapi_client {
         }
         return $json_responce;
     }
-
     
 }
 ?>
