@@ -126,10 +126,24 @@ class Fauxapi_client {
         $res = $this->curl($url, $post);
     }
 
+    function apply_changes($module){
+        $ip=$this->gui_ip;
+        $this->get_csrf();
+        $this->get_login();
+        $url = $ip.'/'.$module;
+        $post = array(
+            'apply' => 'Apply Changes'
+        );
+        $res = $this->curl($url, $post);
+    }
+
     public function suricata_interfaces(){
+        $this->add_aliases();
+        $this->apply_changes('firewall_aliases.php');
+        $this->suricata_passlist();
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
-        $post=array("eve_log_alerts_payload"=>"on","eve_log_http"=>"on","eve_log_dns"=>"on","eve_log_tls"=>"on","eve_log_files"=>"on","eve_log_ssh"=>"on","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"default","externallistname"=>"default","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"notice");
+        $post=array("eve_log_alerts_payload"=>"on","eve_log_http"=>"on","eve_log_dns"=>"on","eve_log_tls"=>"on","eve_log_files"=>"on","eve_log_ssh"=>"on","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"pass_bridge","externallistname"=>"pass_bridge","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"notice");
         $post['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
@@ -148,6 +162,28 @@ class Fauxapi_client {
         $this->get_login();
         $res = $this->curl($url, $post);
         return $res;
+    }
+
+    public function add_aliases(){
+        $vip=$this->gui_ip;
+        $vurl = 'http://'.$vip.'/firewall_aliases_edit.php?id=0';
+        $vpost=array("name"=>"every_network","type"=>"network","address0"=>"0.0.0.0","address_subnet0"=>"1","address1"=>"128.0.0.0","address_subnet1"=>"1");
+        $vpost['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $vres = $this->curl($vurl, $vpost);
+        return $vres;
+    }
+
+    public function suricata_passlist(){
+        $vip=$this->gui_ip;
+        $vurl = 'http://'.$vip.'/suricata/suricata_passlist_edit.php?id=0';
+        $vpost=array("name"=>"pass_bridge","localnets"=>"yes","wanips"=>"yes","wangateips"=>"yes","wandnsips"=>"yes","vips"=>"yes","vpnips"=>"yes","address"=>"every_network");
+        $vpost['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $vres = $this->curl($vurl, $vpost);
+        return $vres;
     }
 
     public function syslog_settings(){
