@@ -659,6 +659,7 @@ function reset_factory_defaults($lock = false, $reboot_required = true) {
 	}
 	closedir($dh);
 	unlink_if_exists($g['tmp_path'] . "/config.cache");
+	unlink_if_exists("/etc/registration");
 
 	/* copy default configuration */
 	copy("{$g['conf_default_path']}/config.xml",
