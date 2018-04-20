@@ -143,7 +143,7 @@ class Fauxapi_client {
         $this->suricata_passlist();
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
-        $post=array("eve_log_alerts_payload"=>"on","eve_log_http"=>"on","eve_log_dns"=>"on","eve_log_tls"=>"on","eve_log_files"=>"on","eve_log_ssh"=>"on","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"pass_bridge","externallistname"=>"pass_bridge","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"notice");
+        $post=array("eve_log_alerts_payload"=>"on","eve_log_http"=>"on","eve_log_dns"=>"on","eve_log_tls"=>"on","eve_log_files"=>"on","eve_log_ssh"=>"on","blockoffenders"=>"on","ips_mode"=>"ips_mode_inline","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"1024","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"pass_bridge","externallistname"=>"pass_bridge","passlistname"=>"none","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"notice");
         $post['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
