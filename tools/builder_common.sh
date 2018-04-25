@@ -1026,7 +1026,9 @@ create_memstick_image() {
 	echo ">>> Creating memstick to ${_image_path}." 2>&1 | tee -a ${LOGFILE}
 	echo "/dev/ufs/${PRODUCT_NAME} / ufs ro 0 0" > ${FINAL_CHROOT_DIR}/etc/fstab
 	echo "kern.cam.boot_delay=10000" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	
 	create_distribution_tarball
 
 	makefs -B little -o label=${PRODUCT_NAME},version=2 ${_image_path} ${FINAL_CHROOT_DIR}
