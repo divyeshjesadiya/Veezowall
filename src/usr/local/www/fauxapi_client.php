@@ -138,6 +138,7 @@ class Fauxapi_client {
     }
 
     public function suricata_interfaces(){
+        $this->system_advanced_network();
         $this->add_aliases();
         $this->apply_changes('firewall_aliases.php');
         $this->suricata_passlist();
@@ -179,6 +180,17 @@ class Fauxapi_client {
         $vip=$this->gui_ip;
         $vurl = 'http://'.$vip.'/suricata/suricata_passlist_edit.php?id=0';
         $vpost=array("name"=>"pass_bridge","localnets"=>"yes","wanips"=>"yes","wangateips"=>"yes","wandnsips"=>"yes","vips"=>"yes","vpnips"=>"yes","address"=>"every_network");
+        $vpost['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $vres = $this->curl($vurl, $vpost);
+        return $vres;
+    }
+
+    public function system_advanced_network(){
+        $vip=$this->gui_ip;
+        $vurl = 'http://'.$vip.'/system_advanced_network.php';
+        $vpost=array("ipv6allow"=>"yes","disablechecksumoffloading"=>"yes","disablesegmentationoffloading"=>"yes","disablelargereceiveoffloading"=>"yes");
         $vpost['save'] = 'Save';
         $this->get_csrf();
         $this->get_login();
