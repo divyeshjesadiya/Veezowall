@@ -981,6 +981,9 @@ create_iso_image() {
 	# This check is for supporting create memstick/ova images
 	echo -n ">>> Running command: script -aq $LOGFILE makefs -t cd9660 -o bootimage=\"i386;${FINAL_CHROOT_DIR}/boot/cdboot \"-o no-emul-boot -o rockridge " | tee -a ${LOGFILE}
 	echo "-o label=${FSLABEL} -o publisher=\"${PRODUCT_NAME} project.\" $ISOPATH ${FINAL_CHROOT_DIR}" | tee -a ${LOGFILE}
+	
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
 
 	create_distribution_tarball
 
