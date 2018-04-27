@@ -1067,6 +1067,8 @@ create_memstick_serial_image() {
 
 	echo "/dev/ufs/${PRODUCT_NAME} / ufs ro 0 0" > ${FINAL_CHROOT_DIR}/etc/fstab
 	echo "kern.cam.boot_delay=10000" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
 
 	echo ">>> Creating serial memstick to ${MEMSTICKSERIALPATH}." 2>&1 | tee -a ${LOGFILE}
 
