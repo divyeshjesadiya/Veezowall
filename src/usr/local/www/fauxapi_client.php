@@ -98,7 +98,6 @@ class Fauxapi_client {
         else {
             $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             if ($resultStatus == 200) {
-                //echo "Post Successfully!";
                 $this->csrf = substr($res, strpos($res,'sid:') , 55);
                 return true;
             }
