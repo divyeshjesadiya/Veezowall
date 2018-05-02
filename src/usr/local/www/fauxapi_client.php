@@ -137,7 +137,6 @@ class Fauxapi_client {
     }
 
     public function suricata_interfaces(){
-        $this->system_advanced_network();
         $this->add_aliases();
         $this->apply_changes('firewall_aliases.php');
         $this->suricata_passlist();
