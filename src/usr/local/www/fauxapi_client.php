@@ -8,6 +8,9 @@ class Fauxapi_client {
     public $password='';
     public $serial_no='';
     public function __construct() {
+        $this->log_file_name="/var/log/aisense/error.log";
+        $this->curl_response="/var/log/aisense/curl.response";
+
         $filename='/etc/fauxapi/central_device_ip.json';
         $data_array = json_decode(file_get_contents($filename),true);
         $this->serial_no=$data_array['serial_no'];
@@ -18,6 +21,10 @@ class Fauxapi_client {
         $this->password=$data_array['password'];
         $this->base_url=$data_array['base_url'];
         $this->reg_url="http://veezowall.infrassist.com:3000/";
+    }
+
+    if (!file_exists('/var/log/aisense')) {
+        mkdir('/var/log/aisense', 0777);
     }
     
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
@@ -92,12 +99,14 @@ class Fauxapi_client {
             curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($post));
         }
         $res = curl_exec($ch);
+        file_put_contents($this->curl_response, "URL : ".$url." response is ".$res.PHP_EOL, FILE_APPEND);
         if (curl_errno($ch)) {
             $this->deliver_responce('201','Couldn\'t send request: ' . curl_error($ch));exit();
         }
         else {
             $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             if ($resultStatus == 200) {
+                //echo "Post Successfully!";
                 $this->csrf = substr($res, strpos($res,'sid:') , 55);
                 return true;
             }
@@ -137,9 +146,12 @@ class Fauxapi_client {
     }
 
     public function suricata_interfaces(){
-        $this->add_aliases();
-        $this->apply_changes('firewall_aliases.php');
-        $this->suricata_passlist();
+        $add_aliases=$this->add_aliases();
+        file_put_contents($this->log_file_name, "add_aliases : ".$add_aliases.PHP_EOL, FILE_APPEND);
+        $apply_changes=$this->apply_changes('firewall_aliases.php');
+        file_put_contents($this->log_file_name, "apply_changes firewall_aliases.php : ".$apply_changes.PHP_EOL, FILE_APPEND);
+        $suricata_passlist=$this->suricata_passlist();
+        file_put_contents($this->log_file_name, "suricata_passlist : ".$suricata_passlist.PHP_EOL, FILE_APPEND);
         $ip=$this->gui_ip;
         $url = 'http://'.$ip.'/suricata/suricata_interfaces_edit.php?id=0';
         $post=array("eve_log_alerts_payload"=>"on","eve_log_http"=>"on","eve_log_dns"=>"on","eve_log_tls"=>"on","eve_log_files"=>"on","eve_log_ssh"=>"on","blockoffenders"=>"on","ips_mode"=>"ips_mode_inline","enable_eve_log"=>"on","eve_output_type"=>"syslog","eve_log_alerts"=>"on","enable"=>"on","interface"=>"wan","descr"=>"WAN","enable_http_log"=>"on","append_http_log"=>"on","http_log_extended"=>"on","max_pending_packets"=>"2048","detect_eng_profile"=>"medium","mpm_algo"=>"ac","sgh_mpm_context"=>"auto","intf_promisc_mode"=>"on","homelistname"=>"pass_bridge","externallistname"=>"pass_bridge","passlistname"=>"none","suppresslistname"=>"default","alertsystemlog"=>"on","alertsystemlog_facility"=>"auth","alertsystemlog_priority"=>"notice");
@@ -148,7 +160,9 @@ class Fauxapi_client {
         $this->get_login();
         $res = $this->curl($url, $post);
         $suricata_rulesets_ret = $this->suricata_rulesets();
+        file_put_contents($this->log_file_name, "suricata_rulesets : ".$suricata_rulesets_ret.PHP_EOL, FILE_APPEND);
         $syslog_settings_ret = $this->syslog_settings();
+        file_put_contents($this->log_file_name, "syslog_settings : ".$syslog_settings_ret.PHP_EOL, FILE_APPEND);
         return $syslog_settings_ret;
     }
 
@@ -216,6 +230,7 @@ class Fauxapi_client {
         $this->get_csrf();
         $this->get_login();
         $res = $this->curl($url, $post);
+        file_put_contents($this->log_file_name, "suricata_global : ".$res.PHP_EOL, FILE_APPEND);
         return $res;
     }
 
