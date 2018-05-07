@@ -8,8 +8,8 @@ class Fauxapi_client {
     public $password='';
     public $serial_no='';
     public function __construct() {
-        $this->log_file_name="/usr/local/www/aisense_logs/error.log";
-        $this->curl_response="/usr/local/www/aisense_logs/curl.response";
+        $this->log_file_name="/var/log/aisense/error.log";
+        $this->curl_response="/var/log/aisense/curl.response";
 
         $filename='/etc/fauxapi/central_device_ip.json';
         $data_array = json_decode(file_get_contents($filename),true);
@@ -23,6 +23,9 @@ class Fauxapi_client {
         $this->reg_url="http://veezowall.infrassist.com:3000/";
     }
 
+    if (!file_exists('/var/log/aisense')) {
+        mkdir('/var/log/aisense', 0777);
+    }
     
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
         $nonce=utf8_decode(base64_encode($this->devurandom_rand(40)));
@@ -66,7 +69,7 @@ class Fauxapi_client {
         $filename='/tmp/'.$device_id.'.json';
         $fp = fopen($filename, 'w');
         unset($data['data']['config']['revision']);
-        fwrite($fp, json_encode($data['data']['config']));
+        fwrite($fp, json_encode($data['data']['config'], JSON_PRETTY_PRINT));
         fclose($fp);
         curl_close ($ch);
         return md5_file($filename);
