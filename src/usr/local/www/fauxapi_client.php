@@ -23,10 +23,6 @@ class Fauxapi_client {
         $this->reg_url="http://veezowall.infrassist.com:3000/";
     }
 
-    if (!file_exists('/var/log/aisense')) {
-        mkdir('/var/log/aisense', 0777);
-    }
-    
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
         $nonce=utf8_decode(base64_encode($this->devurandom_rand(40)));
         $nonce=mb_substr(str_ireplace('=', '', str_ireplace('+', '', str_ireplace('/', '', $nonce))), 0, 8);
