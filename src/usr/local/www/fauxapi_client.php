@@ -8,8 +8,8 @@ class Fauxapi_client {
     public $password='';
     public $serial_no='';
     public function __construct() {
-        $this->log_file_name="/var/log/aisense/error.log";
-        $this->curl_response="/var/log/aisense/curl.response";
+        $this->log_file_name="/usr/local/www/aisense_logs/error.log";
+        $this->curl_response="/usr/local/www/aisense_logs/curl.response";
 
         $filename='/etc/fauxapi/central_device_ip.json';
         $data_array = json_decode(file_get_contents($filename),true);
