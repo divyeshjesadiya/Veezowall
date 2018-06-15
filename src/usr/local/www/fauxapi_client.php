@@ -7,6 +7,7 @@ class Fauxapi_client {
     public $current_device_ip='';
     public $password='';
     public $serial_no='';
+    public $gui_ip='';
     public function __construct() {
         $this->log_file_name="/usr/local/www/aisense_logs/error.log";
         $this->curl_response="/usr/local/www/aisense_logs/curl.response";
@@ -22,7 +23,7 @@ class Fauxapi_client {
         $this->base_url=$data_array['base_url'];
         $this->reg_url="http://veezowall.infrassist.com:3000/";
     }
-
+    
     public function _generate_auth($apikey='', $apisecret='', $use_verified_https=false, $debug=false) {
         $nonce=utf8_decode(base64_encode($this->devurandom_rand(40)));
         $nonce=mb_substr(str_ireplace('=', '', str_ireplace('+', '', str_ireplace('/', '', $nonce))), 0, 8);
@@ -228,6 +229,18 @@ class Fauxapi_client {
         $res = $this->curl($url, $post);
         file_put_contents($this->log_file_name, "suricata_global : ".$res.PHP_EOL, FILE_APPEND);
         return $res;
+    }
+
+    public function interfaces(){
+        $ip=$this->gui_ip;
+        $url = 'http://'.$ip.'/interfaces.php?if=opt1';
+        $post=array("enable"=>"yes","descr"=>"OPT1","type"=>"dhcp");
+        $post['save'] = 'Save';
+        $this->get_csrf();
+        $this->get_login();
+        $res = $this->curl($url, $post);
+        return $res;
+        $apply_changes=$this->apply_changes('interfaces.php?if=opt1');
     }
 
     public function deliver_responce($status,$msg,$data=array(),$print_flag=true){

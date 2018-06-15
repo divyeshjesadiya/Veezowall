@@ -19,7 +19,26 @@ if(file_put_contents($parser_file, $aisense_file)){
 
         include_once '/etc/inc/system.inc';
         include_once '/etc/inc/util.inc';
-        $uuid = system_get_serial();
+        $inters = shell_exec("/sbin/ifconfig -lu");
+        $inter_parts = explode(' ', $inters);
+        $final_parts = array();
+        foreach ($inter_parts as $value) {
+            $value = substr($value, 0, -1);
+            array_push($final_parts, $value);
+        }
+        $arrayCounting = array_count_values($final_parts);
+        $maxs = array_keys($arrayCounting, max($arrayCounting));
+        if ($maxs[0]=='re' || $maxs[0]=='vr') {
+            $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."1 | grep ether");
+        }
+        else{
+            $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."0 | grep ether");
+        }
+        $ether_parts = explode(' ', $ether);
+        $uuid = $ether_parts[1];
+        $uuid = trim($uuid);
+        $uuid = md5($uuid);
+        //$uuid = system_get_serial();
 
         function generateKey($length = 12) {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -63,7 +82,7 @@ if(file_put_contents($parser_file, $aisense_file)){
             file_put_contents("/etc/registration", '0');
             echo gettext("Registration failed because Curl call failed...");
             file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
-            shell_exec("/sbin/shutdown -r now");
+            //shell_exec("/sbin/shutdown -r now");
         }
         else{
             $response = json_decode($routput,true);
@@ -102,7 +121,7 @@ if(file_put_contents($parser_file, $aisense_file)){
                 file_put_contents("/etc/registration", '0');
                 echo gettext("Registration Failed...".$response['msg']);
                 file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File NOT exists  \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
-                shell_exec("/sbin/shutdown -r now");
+                //shell_exec("/sbin/shutdown -r now");
             }
         }
     }
@@ -120,7 +139,26 @@ if(file_put_contents($parser_file, $aisense_file)){
 
             include_once '/etc/inc/system.inc';
             include_once '/etc/inc/util.inc';
-            $uuid = system_get_serial();
+            $inters = shell_exec("/sbin/ifconfig -lu");
+            $inter_parts = explode(' ', $inters);
+            $final_parts = array();
+            foreach ($inter_parts as $value) {
+                $value = substr($value, 0, -1);
+                array_push($final_parts, $value);
+            }
+            $arrayCounting = array_count_values($final_parts);
+            $maxs = array_keys($arrayCounting, max($arrayCounting));
+            if ($maxs[0]=='re' || $maxs[0]=='vr') {
+                $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."1 | grep ether");
+            }
+            else{
+                $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."0 | grep ether");
+            }
+            $ether_parts = explode(' ', $ether);
+            $uuid = $ether_parts[1];
+            $uuid = trim($uuid);
+            $uuid = md5($uuid);
+            // $uuid = system_get_serial();
 
             function generateKey($length = 12) {
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -165,7 +203,7 @@ if(file_put_contents($parser_file, $aisense_file)){
                 echo gettext("Registration failed because Curl call failed...");
                 file_put_contents($log_file_name, "\n Registration failed because Curl call failed... - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($routput,JSON_PRETTY_PRINT)  ,FILE_APPEND);
                 file_put_contents($log_file_name, "\n ************* \t ".date("Y-m-d H:i:s")." \n".$routput ,FILE_APPEND);
-                shell_exec("/sbin/shutdown -r now");
+                //shell_exec("/sbin/shutdown -r now");
             }
             else{
                 $response = json_decode($routput,true);
@@ -204,7 +242,7 @@ if(file_put_contents($parser_file, $aisense_file)){
                     file_put_contents("/etc/registration", '0');
                     echo gettext("Registration Failed...".$response['msg']);
                     file_put_contents($log_file_name, "\n Registration Fail Because ...".$response['msg']." - IF File exists With 0   \t ".date("Y-m-d H:i:s")." \n".json_encode($response,JSON_PRETTY_PRINT)  ,FILE_APPEND);
-                    shell_exec("/sbin/shutdown -r now");
+                    //shell_exec("/sbin/shutdown -r now");
                 }
             }
         }
