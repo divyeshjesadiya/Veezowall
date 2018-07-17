@@ -1588,14 +1588,14 @@ pkg_repo_rsync() {
 		if [ -n "${_IS_RELEASE}" -o "${_repo_path_param}" = "${CORE_PKG_PATH}" ]; then
 			for _pkg_final_rsync_hostname in ${PKG_FINAL_RSYNC_HOSTNAME}; do
 				# Send .real* directories first to prevent having a broken repo while transfer happens
-				local _cmd="rsync -Have \"ssh -i /root/.ssh/id_rsa -p ${PKG_FINAL_RSYNC_SSH_PORT} -o StrictHostKeyChecking=no\" \
+				local _cmd="rsync -Have \"ssh -i /root/.ssh/id_rsa -p ${PKG_FINAL_RSYNC_SSH_PORT} -o StrictHostKeyChecking=yes\" \
 					--timeout=120  ${PKG_RSYNC_DESTDIR}/./${_repo_base%%-core}* \
 					--include=\"/*\" --include=\"*/.real*\" --include=\"*/.real*/***\" \
 					--exclude=\"*\" \
 					${PKG_FINAL_RSYNC_USERNAME}@${_pkg_final_rsync_hostname}:${PKG_FINAL_RSYNC_DESTDIR}"
 
 				echo -n ">>> Sending updated packages to ${_pkg_final_rsync_hostname}... " | tee -a ${_logfile}
-				if script -aq ${_logfile} ssh -p ${PKG_RSYNC_SSH_PORT} -o StrictHostKeyChecking=no \
+				if script -aq ${_logfile} ssh -p ${PKG_RSYNC_SSH_PORT} -o StrictHostKeyChecking=yes \
 					${PKG_RSYNC_USERNAME}@${_pkg_rsync_hostname} ${_cmd}; then
 					echo "Done!" | tee -a ${_logfile}
 				else
