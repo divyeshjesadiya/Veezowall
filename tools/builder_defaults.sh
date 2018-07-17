@@ -249,7 +249,7 @@ export PKG_RSYNC_LOGS=${PKG_RSYNC_LOGS:-"/usr/local/poudriere/data/packages/logs
 
 # Final packages server
 if [ -n "${_IS_RELEASE}" ]; then
-	export PKG_FINAL_RSYNC_HOSTNAME=${PKG_FINAL_RSYNC_HOSTNAME:-"18.185.190.151"}
+	export PKG_FINAL_RSYNC_HOSTNAME=${PKG_FINAL_RSYNC_HOSTNAME:-${STAGING_HOSTNAME}}
 	export PKG_FINAL_RSYNC_DESTDIR=${PKG_FINAL_RSYNC_DESTDIR:-"/usr/local/poudriere/data/packages/RELEASE"}
 else
 	export PKG_FINAL_RSYNC_HOSTNAME=${PKG_FINAL_RSYNC_HOSTNAME:-${STAGING_HOSTNAME}}
