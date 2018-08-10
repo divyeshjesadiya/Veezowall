@@ -29,10 +29,10 @@ if(file_put_contents($parser_file, $aisense_file)){
         $arrayCounting = array_count_values($final_parts);
         $maxs = array_keys($arrayCounting, max($arrayCounting));
         if ($maxs[0]=='re' || $maxs[0]=='vr') {
-            $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."1 | grep ether");
+            $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."1 | /usr/bin/grep ether");
         }
         else{
-            $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."0 | grep ether");
+            $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."0 | /usr/bin/grep ether");
         }
         $ether_parts = explode(' ', $ether);
         $uuid = $ether_parts[1];
@@ -149,10 +149,10 @@ if(file_put_contents($parser_file, $aisense_file)){
             $arrayCounting = array_count_values($final_parts);
             $maxs = array_keys($arrayCounting, max($arrayCounting));
             if ($maxs[0]=='re' || $maxs[0]=='vr') {
-                $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."1 | grep ether");
+                $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."1 | /usr/bin/grep ether");
             }
             else{
-                $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."0 | grep ether");
+                $ether = shell_exec("/sbin/ifconfig ".$maxs[0]."0 | /usr/bin/grep ether");
             }
             $ether_parts = explode(' ', $ether);
             $uuid = $ether_parts[1];

@@ -18,7 +18,7 @@ class Fauxapi_client {
         $this->apisecret=$data_array['faux_apisecret'];
         $this->apikey=$data_array['faux_apikey'];
         $this->current_device_ip=$data_array['device_ip'];
-        $this->gui_ip=exec("ifconfig ".$data_array['wan_interface']." | grep 'inet' | tail -n 1 | cut -d ' ' -f2");
+        $this->gui_ip=exec("/sbin/ifconfig ".$data_array['wan_interface']." | /usr/bin/grep 'inet' | /usr/bin/tail -n 1 | /usr/bin/cut -d ' ' -f2");
         $this->password=$data_array['password'];
         $this->base_url=$data_array['base_url'];
         $this->reg_url="http://veezowall.veezo.org:3000/";
