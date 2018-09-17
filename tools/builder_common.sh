@@ -977,8 +977,8 @@ create_iso_image() {
 
 	FSLABEL=$(echo ${PRODUCT_NAME} | tr '[:lower:]' '[:upper:]')
 	echo "/dev/iso9660/${FSLABEL} / cd9660 ro 0 0" > ${FINAL_CHROOT_DIR}/etc/fstab
-	echo "hw.igb.rxd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.txd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
 
 	# This check is for supporting create memstick/ova images
 	echo -n ">>> Running command: script -aq $LOGFILE makefs -t cd9660 -o bootimage=\"i386;${FINAL_CHROOT_DIR}/boot/cdboot \"-o no-emul-boot -o rockridge " | tee -a ${LOGFILE}
@@ -1029,8 +1029,8 @@ create_memstick_image() {
 	echo ">>> Creating memstick to ${_image_path}." 2>&1 | tee -a ${LOGFILE}
 	echo "/dev/ufs/${PRODUCT_NAME} / ufs ro 0 0" > ${FINAL_CHROOT_DIR}/etc/fstab
 	echo "kern.cam.boot_delay=10000" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.rxd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.txd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
 	
 	create_distribution_tarball
 
@@ -1070,8 +1070,8 @@ create_memstick_serial_image() {
 
 	echo "/dev/ufs/${PRODUCT_NAME} / ufs ro 0 0" > ${FINAL_CHROOT_DIR}/etc/fstab
 	echo "kern.cam.boot_delay=10000" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.rxd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.txd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
 
 	echo ">>> Creating serial memstick to ${MEMSTICKSERIALPATH}." 2>&1 | tee -a ${LOGFILE}
 
@@ -1132,8 +1132,8 @@ create_memstick_adi_image() {
 
 	echo "/dev/ufs/${PRODUCT_NAME} / ufs ro 0 0" > ${FINAL_CHROOT_DIR}/etc/fstab
 	echo "kern.cam.boot_delay=10000" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.rxd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
-	echo "hw.igb.txd=4096" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.rxd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
+	echo "hw.igb.txd=2048" >> ${FINAL_CHROOT_DIR}/boot/loader.conf.local
 
 	echo ">>> Creating serial memstick to ${MEMSTICKADIPATH}." 2>&1 | tee -a ${LOGFILE}
 
