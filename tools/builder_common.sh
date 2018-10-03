@@ -1769,8 +1769,8 @@ poudriere_create_ports_tree() {
 			print_error_pfS
 		fi
 		if [ -n "${POUDRIERE_PORTS_GIT_BRANCH}" ]; then
-			#_branch="-B ${POUDRIERE_PORTS_GIT_BRANCH}"
-			_branch=""
+			_branch="-B ${POUDRIERE_PORTS_GIT_BRANCH}"
+			#_branch=""
 		fi
 		echo -n ">>> Creating poudriere ports tree, it may take some time... " | tee -a ${LOGFILE}
 		if ! script -aq ${LOGFILE} poudriere ports -c -p "${POUDRIERE_PORTS_NAME}" -m git ${_branch} >/dev/null 2>&1; then
